@@ -8,10 +8,20 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 
 
-Route::get('/productos', [ProductoController::class, 'index'])->name("productos.index");
-Route::get('/productos/crear', [ProductoController:: class, 'create'])->name("productos.create");
-Route::get('/productos/{id}', [ProductoController::class, 'show'])->name("productos.show");
-Route::post('/productos', [ProductoController::class, 'store'])->name("productos.store");
-Route::get('/productos/{id}/editar', [ProductoController::class, 'edit'])->name("productos.edit");
-Route::put('/productos/{id}', [ProductoController::class, 'update'])->name("productos.update");
-Route::delete('/productos/{id}', [ProductoController::class, 'destroy'])->name("productos.destroy");
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+    Route::get('/productos', [ProductoController::class, 'index'])->name("productos.index");
+    Route::get('/productos/crear', [ProductoController:: class, 'create'])->name("productos.create");
+    Route::get('/productos/{id}', [ProductoController::class, 'show'])->name("productos.show");
+    Route::post('/productos', [ProductoController::class, 'store'])->name("productos.store");
+    Route::get('/productos/{id}/editar', [ProductoController::class, 'edit'])->name("productos.edit");
+    Route::put('/productos/{id}', [ProductoController::class, 'update'])->name("productos.update");
+    Route::delete('/productos/{id}', [ProductoController::class, 'destroy'])->name("productos.destroy");
+});
