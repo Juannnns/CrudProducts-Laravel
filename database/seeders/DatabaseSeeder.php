@@ -15,9 +15,22 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->withPersonalTeam()->create();
 
-        User::factory()->withPersonalTeam()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        if (!User::where('email', 'admin@example.com')->exists()) {
+            User::factory()->withPersonalTeam()->create([
+                'name' => 'Admin User',
+                'email' => 'admin@example.com',
+                'password' => bcrypt('password'),
+                'role' => 'admin',
+            ]);
+        }
+
+        if (!User::where('email', 'user@example.com')->exists()) {
+            User::factory()->withPersonalTeam()->create([
+                'name' => 'Standard User',
+                'email' => 'user@example.com',
+                'password' => bcrypt('password'),
+                'role' => 'user',
+            ]);
+        }
     }
 }

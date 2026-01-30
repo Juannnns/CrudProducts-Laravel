@@ -1,67 +1,75 @@
-<!DOCTYPE html>
-<html lang="en">
+<x-app-layout>
+    <x-slot name="header">
+        <div class="flex justify-between items-center">
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                {{ __('Listado de productos') }}
+            </h2>
+            <a href="{{ route('productos.create') }}" class="inline-block px-4 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-700 active:bg-green-900 focus:outline-none focus:border-green-900 focus:ring ring-green-300 disabled:opacity-25 transition ease-in-out duration-150">
+                {{ __('Crear producto') }}
+            </a>
+        </div>
+    </x-slot>
 
-<head>
-    <meta charset="UTF-8">
-    <title>Productos</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-
-<body class="p-10 bg-gray-100">
-
-    <h1 class="text-2xl font-bold mb-6">Listado de productos</h1>
-
-    <a href="/productos/crear" class="mb-4 inline-block bg-green-600 text-white px-4 py-2 rounded">
-        Crear producto
-    </a>
-
-    <table class="w-full bg-white rounded shadow">
-        <thead class="bg-gray-200">
-            <tr>
-                <th class="p-2 text-left">#</th>
-                <th class="p-2 text-left">Nombre</th>
-                <th class="p-2 text-left">Precio</th>
-                <th class="p-2">Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse ($productos as $producto)
-                <tr class="border-t">
-                    <td class="p-2">{{ $loop->iteration }}</td>
-                    <td class="p-2">{{ $producto->nombre }}</td>
-                    <td class="p-2">${{ $producto->precio }}</td>
-                    <td class="p-2 flex gap-2">
-                        <a href="/productos/{{ $producto->id }}/editar"
-                            class="inline-flex items-center gap-1 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-3 py-1.5 rounded transition">
-                             Editar </a>
-                        <form action="/productos/{{ $producto->id }}" method="POST"
-                            onsubmit="return confirm('¿Estás seguro?');">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit"
-                                class="inline-flex items-center gap-1 bg-red-600 hover:bg-red-700 text-white text-sm font-semibold px-3 py-1.5 rounded transition">
-                                Eliminar 
-                            </button>
-                        </form>
-                        <a href="/productos/{{ $producto->id }}" class="inline-flex items-center gap-1 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-3 py-1.5 rounded transition">
-                            Ver 
-                        </a>
-                    </td>
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="4" class="p-4 text-center">
-                        No hay productos
-                    </td>
-                </tr>
-            @endforelse
-        </tbody>
-    </table>
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">#</th>
+                                <th scope="col" class="px-6 py-3">Nombre</th>
+                                <th scope="col" class="px-6 py-3">Precio</th>
+                                <th scope="col" class="px-6 py-3">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($productos as $producto)
+                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                    <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
+                                        {{ $loop->iteration }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ $producto->nombre }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        ${{ $producto->precio }}
+                                    </td>
+                                    <td class="px-6 py-4 flex gap-2">
+                                        <a href="{{ route('productos.edit', $producto->id) }}" class="inline-flex items-center px-3 py-1 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                                            Editar
+                                        </a>
+                                        
+                                        <form action="{{ route('productos.destroy', $producto->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="inline-flex items-center px-3 py-1 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-700 focus:bg-red-700 active:bg-red-900 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                                                Eliminar
+                                            </button>
+                                        </form>
     
-    <div class="mt-4">
-        {{ $productos->links() }}
+                                        <a href="{{ route('productos.show', $producto->id) }}" class="inline-flex items-center px-3 py-1 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                                            Ver
+                                        </a>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                    <td colspan="4" class="px-6 py-4 text-center">
+                                        No hay productos
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+
+                @if($productos->hasPages())
+                    <div class="p-4 border-t border-gray-200 dark:border-gray-700">
+                        {{ $productos->links() }}
+                    </div>
+                @endif
+            </div>
+        </div>
     </div>
-
-</body>
-
-</html>
+</x-app-layout>

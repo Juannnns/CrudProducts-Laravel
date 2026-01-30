@@ -10,7 +10,11 @@ class ProductoController extends Controller
 {
     public function index()
     {
-        $productos = Product::paginate(10);
+        if (auth()->user()->isAdmin()) {
+            $productos = Product::paginate(10);
+        } else {
+            $productos = auth()->user()->products()->paginate(10);
+        }
         return view('productos.index', compact('productos'));
     }
 
@@ -20,6 +24,11 @@ class ProductoController extends Controller
         if (!$producto) {
             return "Producto no encontrado";
         }
+
+        if (!auth()->user()->isAdmin() && $producto->user_id != auth()->id()) {
+            abort(403, 'Unauthorized action.');
+        }
+
         return view('productos.show', compact('producto'));
     }
 
@@ -34,12 +43,19 @@ class ProductoController extends Controller
         if (!$producto) {
             return "Producto no encontrado";
         }
+
+        if (!auth()->user()->isAdmin() && $producto->user_id != auth()->id()) {
+            abort(403, 'Unauthorized action.');
+        }
+
         return view('productos.edit', compact('producto'));
     }
 
     public function store(Request $request)
     {
-        Product::create($request->all());
+        $data = $request->all();
+        $data['user_id'] = auth()->id();
+        Product::create($data);
         return redirect('/productos');
     }
 
@@ -49,6 +65,11 @@ class ProductoController extends Controller
         if (!$producto) {
             return "Producto no encontrado";
         }
+
+        if (!auth()->user()->isAdmin() && $producto->user_id != auth()->id()) {
+            abort(403, 'Unauthorized action.');
+        }
+
         $producto->update($request->all());
         return redirect('/productos');
     }
@@ -56,7 +77,13 @@ class ProductoController extends Controller
 
     public function destroy($id)
     {
-        Product::destroy($id);
+        $producto = Product::find($id);
+        if ($producto) {
+            if (!auth()->user()->isAdmin() && $producto->user_id != auth()->id()) {
+                abort(403, 'Unauthorized action.');
+            }
+            $producto->delete();
+        }
         return redirect('/productos');
     }
 }
