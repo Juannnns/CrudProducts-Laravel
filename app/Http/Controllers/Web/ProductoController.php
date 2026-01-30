@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
 
 class ProductoController extends Controller
@@ -51,15 +53,15 @@ class ProductoController extends Controller
         return view('productos.edit', compact('producto'));
     }
 
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
     {
-        $data = $request->all();
+        $data = $request->validated();
         $data['user_id'] = auth()->id();
         Product::create($data);
         return redirect('/productos');
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateProductRequest $request, $id)
     {
         $producto = Product::find($id);
         if (!$producto) {
@@ -70,7 +72,7 @@ class ProductoController extends Controller
             abort(403, 'Unauthorized action.');
         }
 
-        $producto->update($request->all());
+        $producto->update($request->validated());
         return redirect('/productos');
     }
 
