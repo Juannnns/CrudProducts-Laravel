@@ -26,3 +26,10 @@ Route::middleware([
     Route::put('/productos/{id}', [ProductoController::class, 'update'])->name("productos.update");
     Route::delete('/productos/{id}', [ProductoController::class, 'destroy'])->name("productos.destroy");
 });
+
+Route::fallback(function () {
+    if (auth()->check()) {
+        return redirect()->route('dashboard');
+    }
+    return redirect()->route('home');
+});                     
