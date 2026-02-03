@@ -16,8 +16,7 @@ class ProductoController extends Controller
             $productos = Product::with('category')->paginate(10);
         } else {
             $productos = auth()->user()->products()->with('category')->paginate(10);
-        }
-        return view('productos.index', compact('productos'));
+        } return view('productos.index', compact('productos'));
     }
 
     public function show($id)
@@ -25,13 +24,9 @@ class ProductoController extends Controller
         $producto = Product::with('category')->find($id);
         if (!$producto) {
             return "Producto no encontrado";
-        }
-
-        if (!auth()->user()->isAdmin() && $producto->user_id != auth()->id()) {
+        } if (!auth()->user()->isAdmin() && $producto->user_id != auth()->id()) {
             abort(403, 'Unauthorized action.');
-        }
-
-        return view('productos.show', compact('producto'));
+        } return view('productos.show', compact('producto'));
     }
 
     public function create()
@@ -45,13 +40,9 @@ class ProductoController extends Controller
         $producto = Product::find($id);
         if (!$producto) {
             return "Producto no encontrado";
-        }
-
-        if (!auth()->user()->isAdmin() && $producto->user_id != auth()->id()) {
+        } if (!auth()->user()->isAdmin() && $producto->user_id != auth()->id()) {
             abort(403, 'Unauthorized action.');
-        }
-
-        $categories = \App\Models\Category::all();
+        } $categories = \App\Models\Category::all();
         return view('productos.edit', compact('producto', 'categories'));
     }
 
@@ -59,7 +50,6 @@ class ProductoController extends Controller
     {
         $data = $request->validated();
         $data['user_id'] = auth()->id();
-
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('products', 'public');
             $data['image_path'] = $path;
@@ -73,7 +63,6 @@ class ProductoController extends Controller
                 $product->images()->create(['image_path' => $path]);
             }
         }
-
         return redirect('/productos');
     }
 
@@ -82,9 +71,7 @@ class ProductoController extends Controller
         $producto = Product::find($id);
         if (!$producto) {
             return "Producto no encontrado";
-        }
-
-        if (!auth()->user()->isAdmin() && $producto->user_id != auth()->id()) {
+        } if (!auth()->user()->isAdmin() && $producto->user_id != auth()->id()) {
             abort(403, 'Unauthorized action.');
         }
 

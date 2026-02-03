@@ -32,4 +32,4 @@ Route::fallback(function () {
         return redirect()->route('dashboard');
     }
     return redirect()->route('home');
-});                     
+});

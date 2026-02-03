@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                {{ __('Dashboard - Sistema de Gestión de Productos') }}
+                {{ __('Dashboard - Product Management System') }}
             </h2>
         </div>
     </x-slot>
@@ -14,15 +14,15 @@
             <div class="bg-gradient-to-r from-blue-500 to-purple-600 overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="p-8 text-white">
                     <h1 class="text-3xl font-bold mb-2">
-                        ¡Bienvenido, {{ Auth::user()->name }}! 👋
+                        ¡Welcome, {{ Auth::user()->name }}! 👋
                     </h1>
                     <p class="text-blue-100 text-lg">
-                        Sistema completo de gestión de productos con Laravel
+                        Complete product management system with Laravel
                     </p>
                 </div>
             </div>
 
-            <!-- Estadísticas -->
+            <!-- Statistics -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <!-- Total Productos -->
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
@@ -34,7 +34,7 @@
                                 </svg>
                             </div>
                             <div class="ml-4">
-                                <h2 class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Productos</h2>
+                                <h2 class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Products</h2>
                                 <p class="text-2xl font-semibold text-gray-900 dark:text-white">{{ count($productos) }}</p>
                             </div>
                         </div>
@@ -51,7 +51,7 @@
                                 </svg>
                             </div>
                             <div class="ml-4">
-                                <h2 class="text-sm font-medium text-gray-500 dark:text-gray-400">Mis Productos</h2>
+                                <h2 class="text-sm font-medium text-gray-500 dark:text-gray-400">My Products</h2>
                                 <p class="text-2xl font-semibold text-gray-900 dark:text-white">{{ $productos->where('user_id', Auth::id())->count() }}</p>
                             </div>
                         </div>
@@ -68,7 +68,7 @@
                                 </svg>
                             </div>
                             <div class="ml-4">
-                                <h2 class="text-sm font-medium text-gray-500 dark:text-gray-400">Categorías</h2>
+                                <h2 class="text-sm font-medium text-gray-500 dark:text-gray-400">Categories</h2>
                                 <p class="text-2xl font-semibold text-gray-900 dark:text-white">{{ $productos->pluck('category_id')->unique()->count() }}</p>
                             </div>
                         </div>
@@ -80,7 +80,7 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="p-6 lg:p-8">
                     <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">
-                        🚀 Funcionalidades del Sistema
+                        🚀 System Features
                     </h2>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -90,79 +90,79 @@
                                 <span class="text-3xl mr-4">📝</span>
                                 <div>
                                     <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                                        CRUD Completo de Productos
+                                        Complete CRUD of Products
                                     </h3>
                                     <p class="text-gray-600 dark:text-gray-400 text-sm">
-                                        Crea, lee, actualiza y elimina productos con una interfaz intuitiva. Gestiona todos tus productos desde un solo lugar.
+                                        Create, read, update and delete products with an intuitive interface. Manage all your products from one place.
                                     </p>
                                     <a href="{{ route('productos.index') }}" class="inline-block mt-3 text-blue-600 dark:text-blue-400 hover:underline text-sm font-medium">
-                                        Ver Productos →
+                                        See Products →
                                     </a>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Categorías -->
+                        <!-- Categories -->
                         <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-6 hover:shadow-lg transition-shadow">
                             <div class="flex items-start">
                                 <span class="text-3xl mr-4">🏷️</span>
                                 <div>
                                     <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                                        Sistema de Categorías
+                                        Category System
                                     </h3>
                                     <p class="text-gray-600 dark:text-gray-400 text-sm">
-                                        Organiza tus productos por categorías para una mejor gestión y búsqueda. Asigna múltiples productos a cada categoría.
+                                        Organize your products by categories for better management and search. Assign multiple products to each category.
                                     </p>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Imágenes -->
+                        <!-- Images -->
                         <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-6 hover:shadow-lg transition-shadow">
                             <div class="flex items-start">
                                 <span class="text-3xl mr-4">🖼️</span>
                                 <div>
                                     <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                                        Gestión de Imágenes
+                                    Image Management
                                     </h3>
                                     <p class="text-gray-600 dark:text-gray-400 text-sm">
-                                        Sube imágenes de productos y galerías. Almacenamiento optimizado con Laravel Storage y visualización elegante.
+                                        Upload product images and galleries. Optimal storage with Laravel Storage and elegant display.
                                     </p>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Autenticación -->
+                        <!-- Authentication -->
                         <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-6 hover:shadow-lg transition-shadow">
                             <div class="flex items-start">
                                 <span class="text-3xl mr-4">🔐</span>
                                 <div>
                                     <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                                        Autenticación con Jetstream
+                                        Authentication with Jetstream
                                     </h3>
                                     <p class="text-gray-600 dark:text-gray-400 text-sm">
-                                        Sistema de autenticación robusto con Laravel Jetstream. Gestión de usuarios, perfiles y equipos.
+                                        Robust authentication system with Laravel Jetstream. User management, profiles, and teams.
                                     </p>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Control de Acceso -->
+                        <!-- Access Control -->
                         <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-6 hover:shadow-lg transition-shadow">
                             <div class="flex items-start">
                                 <span class="text-3xl mr-4">👥</span>
                                 <div>
                                     <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                                        Control de Acceso por Usuario
+                                        User Access Control
                                     </h3>
                                     <p class="text-gray-600 dark:text-gray-400 text-sm">
-                                        Cada usuario solo puede editar y eliminar sus propios productos. Sistema de roles (admin/user) implementado.
+                                        Each user can only edit and delete their own products. Role system (admin/user) implemented.
                                     </p>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Validaciones -->
+                        <!-- Validations -->
                         <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-6 hover:shadow-lg transition-shadow">
                             <div class="flex items-start">
                                 <span class="text-3xl mr-4">✅</span>
@@ -180,11 +180,11 @@
                 </div>
             </div>
 
-            <!-- Acciones Rápidas -->
+            <!--    Quick Actions -->
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="p-6 lg:p-8">
                     <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">
-                        ⚡ Acciones Rápidas
+                        ⚡ Quick Actions
                     </h2>
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -192,21 +192,21 @@
                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                             </svg>
-                            Crear Nuevo Producto
+                            Create New Product
                         </a>
 
                         <a href="{{ route('productos.index') }}" class="flex items-center justify-center px-6 py-4 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors shadow-md">
                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/>
                             </svg>
-                            Ver Todos los Productos
+                            See All Products
                         </a>
 
                         <a href="{{ route('profile.show') }}" class="flex items-center justify-center px-6 py-4 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors shadow-md">
                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                             </svg>
-                            Mi Perfil
+                            My Profile
                         </a>
                     </div>
                 </div>
@@ -216,7 +216,7 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="p-6 lg:p-8">
                     <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">
-                        🛠️ Tecnologías Utilizadas
+                        🛠️ Technologies Used
                     </h2>
 
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
