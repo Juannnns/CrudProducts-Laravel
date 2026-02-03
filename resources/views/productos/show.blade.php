@@ -11,46 +11,49 @@
                 <div class="p-6 lg:p-8 bg-white dark:bg-gray-800 dark:bg-gradient-to-bl dark:from-gray-700/50 dark:via-transparent border-b border-gray-200 dark:border-gray-700">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
                         <!-- Imagen del producto -->
+                        <!-- Imagen del producto -->
                         <div>
-                            <img 
-                                src="https://via.placeholder.com/600" 
-                                alt="Producto"
-                                class="w-full rounded-xl object-cover shadow-md"
-                            >
+                            @if($producto->image_path)
+                                <img src="{{ asset('storage/' . $producto->image_path) }}" alt="{{ $producto->nombre }}" class="w-full rounded-xl object-cover shadow-md mb-4">
+                            @else
+                                <img src="https://via.placeholder.com/600?text=Sin+Imagen" alt="Producto Sin Imagen" class="w-full rounded-xl object-cover shadow-md mb-4 bg-gray-200">
+                            @endif
+
+                            <!-- Galería -->
+                            @if($producto->images->count() > 0)
+                                <div class="grid grid-cols-4 gap-2">
+                                    @foreach($producto->images as $image)
+                                        <div class="relative group">
+                                            <img src="{{ asset('storage/' . $image->image_path) }}" class="h-20 w-full object-cover rounded-md shadow-sm border border-gray-200 dark:border-gray-700 cursor-pointer hover:opacity-75 transition" onclick="window.open(this.src)">
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @endif
                         </div>
 
                         <!-- Información del producto -->
                         <div class="flex flex-col justify-between">
                             <div>
-                                <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+                                <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">
                                     {{ $producto->nombre }}
                                 </h1>
+                                <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">
+                                    Categoría: 
+                                    <span class="font-semibold text-gray-700 dark:text-gray-200">
+                                        {{ $producto->category ? $producto->category->name : 'Sin Categoría' }}
+                                    </span>
+                                </p>
 
                                 <p class="text-2xl text-green-600 dark:text-green-400 font-semibold mb-4">
                                     ${{ $producto->precio }}
                                 </p>
 
-                                <p class="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-                                    Este producto está diseñado para ofrecer la mejor experiencia.
-                                    Fabricado con materiales de alta calidad y pensado para un uso
-                                    cómodo y duradero.
-                                </p>
-
-                                <!-- Características -->
-                                <ul class="space-y-2 mb-6 text-gray-700 dark:text-gray-300">
-                                    <li class="flex items-center">
-                                        <span class="text-green-500 mr-2">✔</span> Material premium
-                                    </li>
-                                    <li class="flex items-center">
-                                        <span class="text-green-500 mr-2">✔</span> Garantía de 1 año
-                                    </li>
-                                    <li class="flex items-center">
-                                        <span class="text-green-500 mr-2">✔</span> Diseño ergonómico
-                                    </li>
-                                    <li class="flex items-center">
-                                        <span class="text-green-500 mr-2">✔</span> Envío rápido
-                                    </li>
-                                </ul>
+                                <div class="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+                                    <h3 class="font-bold text-lg mb-2">Descripción:</h3>
+                                    <p>
+                                        {{ $producto->description ?? 'Sin descripción disponible.' }}
+                                    </p>
+                                </div>
                             </div>
 
                             <!-- Acción -->

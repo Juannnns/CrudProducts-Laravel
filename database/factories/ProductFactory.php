@@ -17,8 +17,9 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         return [
-            'nombre' => $this->faker->words(3, true),
+            'nombre' => implode(' ', $this->faker->words(3)),
             'precio' => $this->faker->randomFloat(2, 10, 1000),
+            'category_id' => \App\Models\Category::inRandomOrder()->first()->id ?? null,
         ];
     }
 }

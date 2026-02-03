@@ -11,6 +11,12 @@
 |
 */
 
+/**
+ * Define properties available in test context
+ * 
+ * @property \App\Models\User $user
+ * @property \App\Models\Category $category
+ */
 pest()->extend(Tests\TestCase::class)
     ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
     ->in('Feature');

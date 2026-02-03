@@ -20,6 +20,7 @@
                                 <th scope="col" class="px-6 py-3">#</th>
                                 <th scope="col" class="px-6 py-3">Nombre</th>
                                 <th scope="col" class="px-6 py-3">Precio</th>
+                                <th scope="col" class="px-6 py-3">Categoría</th>
                                 <th scope="col" class="px-6 py-3">Acciones</th>
                             </tr>
                         </thead>
@@ -34,6 +35,13 @@
                                     </td>
                                     <td class="px-6 py-4">
                                         ${{ $producto->precio }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        @if($producto->category)
+                                            {{ $producto->category->name }}
+                                        @else
+                                            <span class="text-gray-400 italic">Sin Categoría</span>
+                                        @endif
                                     </td>
                                     <td class="px-6 py-4 flex gap-2">
                                         <a href="{{ route('productos.edit', $producto->id) }}" class="inline-flex items-center px-3 py-1 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">

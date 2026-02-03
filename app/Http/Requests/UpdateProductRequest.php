@@ -26,6 +26,13 @@ class UpdateProductRequest extends FormRequest
         return [
             'nombre' => 'required|string|max:255',
             'precio' => 'required|numeric|min:0',
+            'category_id' => 'required|exists:categories,id',
+            'description' => 'nullable|string',
+            'image' => 'nullable|image|max:2048',
+            'gallery.*' => 'image|max:2048',
+            'gallery' => 'array', // Additional validation logic for max count might be needed in controller or complex rule
+            'delete_images' => 'array',
+            'delete_images.*' => 'exists:product_images,id',
         ];
     }
 }

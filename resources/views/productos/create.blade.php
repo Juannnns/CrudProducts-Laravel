@@ -9,7 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="p-6 lg:p-8">
-                    <form action="{{ route('productos.store') }}" method="POST" class="max-w-xl">
+                    <form action="{{ route('productos.store') }}" method="POST" enctype="multipart/form-data" class="max-w-xl">
                         @csrf
                 
                         <div class="mb-4">
@@ -20,6 +20,33 @@
                         <div class="mb-4">
                             <x-label for="precio" value="{{ __('Precio') }}" />
                             <x-input id="precio" class="block mt-1 w-full" type="number" name="precio" :value="old('precio')" required />
+                        </div>
+
+                        <div class="mb-4">
+                            <x-label for="category_id" value="{{ __('Categoría') }}" />
+                            <select id="category_id" name="category_id" class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" required>
+                                <option value="" disabled selected>Seleccione una categoría</option>
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                        {{ $category->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="mb-4">
+                            <x-label for="description" value="{{ __('Descripción') }}" />
+                            <textarea id="description" name="description" class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">{{ old('description') }}</textarea>
+                        </div>
+
+                        <div class="mb-4">
+                            <x-label for="image" value="{{ __('Imagen Principal') }}" />
+                            <input id="image" type="file" name="image" class="block mt-1 w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" required>
+                        </div>
+
+                        <div class="mb-4">
+                            <x-label for="gallery" value="{{ __('Galería (Máx 5)') }}" />
+                            <input id="gallery" type="file" name="gallery[]" multiple class="block mt-1 w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" accept="image/*">
                         </div>
                 
                         <div class="flex items-center gap-4 mt-6">

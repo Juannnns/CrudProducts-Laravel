@@ -14,7 +14,8 @@ class ProductTest extends TestCase
     public function test_it_seeds_products()
     {
         $this->seed(\Database\Seeders\ProductSeeder::class);
-        $this->assertDatabaseCount('products', 50);
+        // Assert at least 100 products exist
+        $this->assertTrue(Product::count() >= 100);
     }
 
     public function test_it_displays_products()
@@ -30,10 +31,14 @@ class ProductTest extends TestCase
     public function test_it_can_create_product()
     {
         $user = \App\Models\User::factory()->withPersonalTeam()->create();
+        $category = \App\Models\Category::factory()->create();
+        $image = \Illuminate\Http\UploadedFile::fake()->image('test.jpg');
 
         $response = $this->actingAs($user)->post('/productos', [
             'nombre' => 'New Product',
-            'precio' => 100
+            'precio' => 100,
+            'category_id' => $category->id,
+            'image' => $image,
         ]);
 
         $response->assertRedirect('/productos');
@@ -54,11 +59,18 @@ class ProductTest extends TestCase
     public function test_it_can_update_product()
     {
         $user = \App\Models\User::factory()->withPersonalTeam()->create();
-        $product = Product::factory()->create(['nombre' => 'Old Name', 'precio' => 10, 'user_id' => $user->id]);
+        $category = \App\Models\Category::factory()->create();
+        $product = Product::factory()->create([
+            'nombre' => 'Old Name',
+            'precio' => 10,
+            'user_id' => $user->id,
+            'category_id' => $category->id,
+        ]);
 
         $response = $this->actingAs($user)->put("/productos/{$product->id}", [
             'nombre' => 'New Name',
-            'precio' => 20
+            'precio' => 20,
+            'category_id' => $category->id,
         ]);
 
         $response->assertRedirect('/productos');

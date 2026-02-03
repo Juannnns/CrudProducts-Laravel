@@ -9,10 +9,20 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nombre', 'precio', 'user_id'];
+    protected $fillable = ['nombre', 'precio', 'description', 'image_path', 'user_id', 'category_id'];
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function images()
+    {
+        return $this->hasMany(ProductImage::class);
     }
 }

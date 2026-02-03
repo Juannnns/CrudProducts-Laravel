@@ -16,9 +16,10 @@ class RoleAccessTest extends TestCase
     {
         $admin = User::factory()->withPersonalTeam()->create(['role' => 'admin']);
         $user = User::factory()->withPersonalTeam()->create(['role' => 'user']);
+        $category = \App\Models\Category::factory()->create();
 
-        $productAdmin = Product::create(['nombre' => 'Admin Product', 'precio' => 100, 'user_id' => $admin->id]);
-        $productUser = Product::create(['nombre' => 'User Product', 'precio' => 50, 'user_id' => $user->id]);
+        $productAdmin = Product::create(['nombre' => 'Admin Product', 'precio' => 100, 'user_id' => $admin->id, 'category_id' => $category->id]);
+        $productUser = Product::create(['nombre' => 'User Product', 'precio' => 50, 'user_id' => $user->id, 'category_id' => $category->id]);
 
         $response = $this->actingAs($admin)->get('/productos');
 
@@ -31,9 +32,10 @@ class RoleAccessTest extends TestCase
     {
         $userA = User::factory()->withPersonalTeam()->create(['role' => 'user']);
         $userB = User::factory()->withPersonalTeam()->create(['role' => 'user']);
+        $category = \App\Models\Category::factory()->create();
 
-        $productA = Product::create(['nombre' => 'Product A', 'precio' => 100, 'user_id' => $userA->id]);
-        $productB = Product::create(['nombre' => 'Product B', 'precio' => 50, 'user_id' => $userB->id]);
+        $productA = Product::create(['nombre' => 'Product A', 'precio' => 100, 'user_id' => $userA->id, 'category_id' => $category->id]);
+        $productB = Product::create(['nombre' => 'Product B', 'precio' => 50, 'user_id' => $userB->id, 'category_id' => $category->id]);
 
         $response = $this->actingAs($userA)->get('/productos');
 
@@ -45,14 +47,16 @@ class RoleAccessTest extends TestCase
     public function test_user_can_edit_own_product()
     {
         $user = User::factory()->withPersonalTeam()->create(['role' => 'user']);
-        $product = Product::create(['nombre' => 'My Product', 'precio' => 100, 'user_id' => $user->id]);
+        $category = \App\Models\Category::factory()->create();
+        $product = Product::create(['nombre' => 'My Product', 'precio' => 100, 'user_id' => $user->id, 'category_id' => $category->id]);
 
         $response = $this->actingAs($user)->get("/productos/{$product->id}/editar");
         $response->assertStatus(200);
 
         $response = $this->actingAs($user)->put("/productos/{$product->id}", [
             'nombre' => 'Updated Product',
-            'precio' => 150
+            'precio' => 150,
+            'category_id' => $category->id,
         ]);
 
         $response->assertRedirect('/productos');
@@ -63,14 +67,16 @@ class RoleAccessTest extends TestCase
     {
         $userA = User::factory()->withPersonalTeam()->create(['role' => 'user']);
         $userB = User::factory()->withPersonalTeam()->create(['role' => 'user']);
-        $productB = Product::create(['nombre' => 'Product B', 'precio' => 50, 'user_id' => $userB->id]);
+        $category = \App\Models\Category::factory()->create();
+        $productB = Product::create(['nombre' => 'Product B', 'precio' => 50, 'user_id' => $userB->id, 'category_id' => $category->id]);
 
         $response = $this->actingAs($userA)->get("/productos/{$productB->id}/editar");
         $response->assertStatus(403);
 
         $response = $this->actingAs($userA)->put("/productos/{$productB->id}", [
             'nombre' => 'Hacked Product',
-            'precio' => 0
+            'precio' => 0,
+            'category_id' => $category->id,
         ]);
 
         $response->assertStatus(403);
@@ -80,11 +86,13 @@ class RoleAccessTest extends TestCase
     {
         $admin = User::factory()->withPersonalTeam()->create(['role' => 'admin']);
         $user = User::factory()->withPersonalTeam()->create(['role' => 'user']);
-        $product = Product::create(['nombre' => 'User Product', 'precio' => 50, 'user_id' => $user->id]);
+        $category = \App\Models\Category::factory()->create();
+        $product = Product::create(['nombre' => 'User Product', 'precio' => 50, 'user_id' => $user->id, 'category_id' => $category->id]);
 
         $response = $this->actingAs($admin)->put("/productos/{$product->id}", [
             'nombre' => 'Admin Updated',
-            'precio' => 200
+            'precio' => 200,
+            'category_id' => $category->id,
         ]);
 
         $response->assertRedirect('/productos');
