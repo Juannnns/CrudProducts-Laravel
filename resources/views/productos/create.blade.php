@@ -5,11 +5,11 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="py-6 sm:py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
-                <div class="p-6 lg:p-8">
-                    <form action="{{ route('productos.store') }}" method="POST" enctype="multipart/form-data" class="max-w-xl">
+                <div class="p-4 sm:p-6 lg:p-8">
+                    <form action="{{ route('productos.store') }}" method="POST" enctype="multipart/form-data" class="max-w-xl mx-auto">
                         @csrf
                 
                         <div class="mb-4">
@@ -41,20 +41,71 @@
 
                         <div class="mb-4">
                             <x-label for="image" value="{{ __('Imagen Principal') }}" />
-                            <input id="image" type="file" name="image" class="block mt-1 w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" required>
+                            <input id="image" type="file" name="image" class="block mt-1 w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" accept="image/*" required>
+                            <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Esta imagen aparecerá como la principal del producto (JPG, PNG, GIF - Máx 2MB)</p>
+                            <div id="preview-main" class="mt-2"></div>
                         </div>
 
                         <div class="mb-4">
-                            <x-label for="gallery" value="{{ __('Galería (Máx 5)') }}" />
+                            <x-label for="gallery" value="{{ __('Galería de Imágenes (Hasta 5 imágenes)') }}" />
                             <input id="gallery" type="file" name="gallery[]" multiple class="block mt-1 w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" accept="image/*">
+                            <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Selecciona hasta 5 imágenes adicionales para la galería del producto (JPG, PNG, GIF - Máx 2MB cada una)</p>
+                            <div id="preview-gallery" class="grid grid-cols-2 sm:grid-cols-3 gap-2 mt-2"></div>
                         </div>
+
+                        <script>
+                            // Preview imagen principal
+                            document.getElementById('image').addEventListener('change', function(e) {
+                                const preview = document.getElementById('preview-main');
+                                preview.innerHTML = '';
+                                
+                                if (e.target.files && e.target.files[0]) {
+                                    const reader = new FileReader();
+                                    reader.onload = function(event) {
+                                        const img = document.createElement('img');
+                                        img.src = event.target.result;
+                                        img.className = 'h-32 w-32 object-cover rounded-lg border-2 border-indigo-500';
+                                        preview.appendChild(img);
+                                    };
+                                    reader.readAsDataURL(e.target.files[0]);
+                                }
+                            });
+
+                            // Preview galería
+                            document.getElementById('gallery').addEventListener('change', function(e) {
+                                const preview = document.getElementById('preview-gallery');
+                                preview.innerHTML = '';
+                                
+                                const files = Array.from(e.target.files).slice(0, 5);
+                                
+                                files.forEach(file => {
+                                    const reader = new FileReader();
+                                    reader.onload = function(event) {
+                                        const div = document.createElement('div');
+                                        div.className = 'relative';
+                                        
+                                        const img = document.createElement('img');
+                                        img.src = event.target.result;
+                                        img.className = 'h-24 w-full object-cover rounded-lg border border-gray-300';
+                                        
+                                        div.appendChild(img);
+                                        preview.appendChild(div);
+                                    };
+                                    reader.readAsDataURL(file);
+                                });
+                                
+                                if (e.target.files.length > 5) {
+                                    alert('Solo se pueden seleccionar hasta 5 imágenes para la galería');
+                                }
+                            });
+                        </script>
                 
-                        <div class="flex items-center gap-4 mt-6">
-                            <x-button>
+                        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 mt-6">
+                            <x-button class="w-full sm:w-auto justify-center">
                                 {{ __('Guardar producto') }}
                             </x-button>
                             
-                            <a href="{{ route('productos.index') }}" class="inline-flex items-center px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-500 rounded-md font-semibold text-xs text-gray-700 dark:text-gray-300 uppercase tracking-widest shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 disabled:opacity-25 transition ease-in-out duration-150">
+                            <a href="{{ route('productos.index') }}" class="w-full sm:w-auto inline-flex items-center justify-center px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-500 rounded-md font-semibold text-xs text-gray-700 dark:text-gray-300 uppercase tracking-widest shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 disabled:opacity-25 transition ease-in-out duration-150">
                                 {{ __('Cancelar') }}
                             </a>
                         </div>

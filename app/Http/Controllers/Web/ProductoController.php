@@ -12,11 +12,26 @@ class ProductoController extends Controller
 {
     public function index()
     {
+        $categories = \App\Models\Category::all();
+        $categoryFilter = request('category');
+
         if (auth()->user()->isAdmin()) {
-            $productos = Product::with('category')->paginate(10);
+            $productos = Product::with(['category', 'images'])
+                ->when($categoryFilter, function($query) use ($categoryFilter) {
+                    return $query->where('category_id', $categoryFilter);
+                })
+                ->paginate(10)
+                ->appends(['category' => $categoryFilter]);
         } else {
-            $productos = auth()->user()->products()->with('category')->paginate(10);
-        } return view('productos.index', compact('productos'));
+            $productos = auth()->user()->products()->with(['category', 'images'])
+                ->when($categoryFilter, function($query) use ($categoryFilter) {
+                    return $query->where('category_id', $categoryFilter);
+                })
+                ->paginate(10)
+                ->appends(['category' => $categoryFilter]);
+        }
+        
+        return view('productos.index', compact('productos', 'categories', 'categoryFilter'));
     }
 
     public function show($id)
@@ -50,20 +65,36 @@ class ProductoController extends Controller
     {
         $data = $request->validated();
         $data['user_id'] = auth()->id();
+        
+        // Guardar imagen principal
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('products', 'public');
             $data['image_path'] = $path;
         }
 
+        // Crear el producto
         $product = Product::create($data);
 
+        // Guardar imágenes adicionales (galería) - máximo 5
         if ($request->hasFile('gallery')) {
-            foreach ($request->file('gallery') as $image) {
+            $galleryImages = $request->file('gallery');
+            $count = 0;
+            
+            foreach ($galleryImages as $image) {
+                if ($count >= 5) {
+                    break; // Límite de 5 imágenes adicionales
+                }
+                
                 $path = $image->store('product_gallery', 'public');
-                $product->images()->create(['image_path' => $path]);
+                $product->images()->create([
+                    'image_path' => $path
+                ]);
+                
+                $count++;
             }
         }
-        return redirect('/productos');
+        
+        return redirect()->route('productos.index')->with('success', 'Producto creado exitosamente con todas sus imágenes');
     }
 
     public function update(UpdateProductRequest $request, $id)
