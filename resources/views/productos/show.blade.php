@@ -12,8 +12,8 @@
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10">
                         <!-- Imagen del producto -->
                         <div>
-                            @if($producto->image_path)
-                                <img src="{{ asset('storage/' . $producto->image_path) }}" alt="{{ $producto->nombre }}" class="w-full rounded-xl object-cover shadow-md mb-4 max-h-96 lg:max-h-none">
+                             @if($producto->image_path)
+                                <img src="{{ str_starts_with($producto->image_path, 'data:') ? $producto->image_path : asset('storage/' . $producto->image_path) }}" alt="{{ $producto->nombre }}" class="w-full rounded-xl object-cover shadow-md mb-4 max-h-96 lg:max-h-none">
                             @else
                                 <img src="https://via.placeholder.com/600?text=Sin+Imagen" alt="Producto Sin Imagen" class="w-full rounded-xl object-cover shadow-md mb-4 bg-gray-200 max-h-96 lg:max-h-none">
                             @endif
@@ -23,7 +23,7 @@
                                 <div class="grid grid-cols-3 sm:grid-cols-4 gap-2">
                                     @foreach($producto->images as $image)
                                         <div class="relative group">
-                                            <img src="{{ asset('storage/' . $image->image_path) }}" class="h-20 sm:h-24 w-full object-cover rounded-md shadow-sm border border-gray-200 dark:border-gray-700 cursor-pointer hover:opacity-75 transition" onclick="window.open(this.src)">
+                                            <img src="{{ str_starts_with($image->image_path, 'data:') ? $image->image_path : asset('storage/' . $image->image_path) }}" class="h-20 sm:h-24 w-full object-cover rounded-md shadow-sm border border-gray-200 dark:border-gray-700 cursor-pointer hover:opacity-75 transition" onclick="window.open(this.src)">
                                         </div>
                                     @endforeach
                                 </div>

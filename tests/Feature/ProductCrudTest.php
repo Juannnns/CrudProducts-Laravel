@@ -56,8 +56,8 @@ test('authenticated user can create a product with image', function () {
 
     $response->assertRedirect('/productos');
 
-    expect(Product::where('nombre', 'iPhone 15 Pro')->exists())->toBeTrue();
-    Storage::disk('public')->assertExists('products/' . $image->hashName());
+    $product = Product::where('nombre', 'iPhone 15 Pro')->first();
+    expect($product->image_path)->toStartWith('data:image/');
 })->group('products', 'feature');
 
 // Test de creación con galería de imágenes
@@ -78,7 +78,7 @@ test('authenticated user can create product with gallery images', function () {
     $product = Product::where('nombre', 'MacBook Pro')->first();
 
     expect($product->images)->toHaveCount(2);
-    Storage::disk('public')->assertExists('product_gallery/' . $gallery1->hashName());
+    expect($product->images->first()->image_path)->toStartWith('data:image/');
 })->group('products', 'feature');
 
 // Test de validación - campos requeridos

@@ -17,31 +17,33 @@ class ProductoController extends Controller
 
         if (auth()->user()->isAdmin()) {
             $productos = Product::with(['category', 'images'])
-                ->when($categoryFilter, function($query) use ($categoryFilter) {
+                ->when($categoryFilter, function ($query) use ($categoryFilter) {
                     return $query->where('category_id', $categoryFilter);
                 })
                 ->paginate(10)
                 ->appends(['category' => $categoryFilter]);
         } else {
             $productos = auth()->user()->products()->with(['category', 'images'])
-                ->when($categoryFilter, function($query) use ($categoryFilter) {
+                ->when($categoryFilter, function ($query) use ($categoryFilter) {
                     return $query->where('category_id', $categoryFilter);
                 })
                 ->paginate(10)
                 ->appends(['category' => $categoryFilter]);
         }
-        
+
         return view('productos.index', compact('productos', 'categories', 'categoryFilter'));
     }
 
     public function show($id)
     {
-        $producto = Product::with('category')->find($id);
+        $producto = Product::with(['category', 'images'])->find($id);
         if (!$producto) {
             return "Producto no encontrado";
-        } if (!auth()->user()->isAdmin() && $producto->user_id != auth()->id()) {
+        }
+        if (!auth()->user()->isAdmin() && $producto->user_id != auth()->id()) {
             abort(403, 'Unauthorized action.');
-        } return view('productos.show', compact('producto'));
+        }
+        return view('productos.show', compact('producto'));
     }
 
     public function create()
@@ -55,9 +57,11 @@ class ProductoController extends Controller
         $producto = Product::find($id);
         if (!$producto) {
             return "Producto no encontrado";
-        } if (!auth()->user()->isAdmin() && $producto->user_id != auth()->id()) {
+        }
+        if (!auth()->user()->isAdmin() && $producto->user_id != auth()->id()) {
             abort(403, 'Unauthorized action.');
-        } $categories = \App\Models\Category::all();
+        }
+        $categories = \App\Models\Category::all();
         return view('productos.edit', compact('producto', 'categories'));
     }
 
@@ -65,11 +69,12 @@ class ProductoController extends Controller
     {
         $data = $request->validated();
         $data['user_id'] = auth()->id();
-        
-        // Guardar imagen principal
+
+        // Guardar imagen principal en Base64
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('products', 'public');
-            $data['image_path'] = $path;
+            $image = $request->file('image');
+            $imageData = base64_encode(file_get_contents($image->getRealPath()));
+            $data['image_path'] = 'data:' . $image->getMimeType() . ';base64,' . $imageData;
         }
 
         // Crear el producto
@@ -79,21 +84,21 @@ class ProductoController extends Controller
         if ($request->hasFile('gallery')) {
             $galleryImages = $request->file('gallery');
             $count = 0;
-            
+
             foreach ($galleryImages as $image) {
                 if ($count >= 5) {
                     break; // Límite de 5 imágenes adicionales
                 }
-                
-                $path = $image->store('product_gallery', 'public');
+
+                $imageData = base64_encode(file_get_contents($image->getRealPath()));
                 $product->images()->create([
-                    'image_path' => $path
+                    'image_path' => 'data:' . $image->getMimeType() . ';base64,' . $imageData
                 ]);
-                
+
                 $count++;
             }
         }
-        
+
         return redirect()->route('productos.index')->with('success', 'Producto creado exitosamente con todas sus imágenes');
     }
 
@@ -102,19 +107,18 @@ class ProductoController extends Controller
         $producto = Product::find($id);
         if (!$producto) {
             return "Producto no encontrado";
-        } if (!auth()->user()->isAdmin() && $producto->user_id != auth()->id()) {
+        }
+        if (!auth()->user()->isAdmin() && $producto->user_id != auth()->id()) {
             abort(403, 'Unauthorized action.');
         }
 
         $data = $request->validated();
 
-        // Update Main Image
+        // Update Main Image Base64
         if ($request->hasFile('image')) {
-            // Delete old image if exists
-            if ($producto->image_path && \Illuminate\Support\Facades\Storage::disk('public')->exists($producto->image_path)) {
-                \Illuminate\Support\Facades\Storage::disk('public')->delete($producto->image_path);
-            }
-            $data['image_path'] = $request->file('image')->store('products', 'public');
+            $image = $request->file('image');
+            $imageData = base64_encode(file_get_contents($image->getRealPath()));
+            $data['image_path'] = 'data:' . $image->getMimeType() . ';base64,' . $imageData;
         }
 
         $producto->update($data);
@@ -126,8 +130,10 @@ class ProductoController extends Controller
                 if ($producto->images()->count() >= 5) {
                     break;
                 }
-                $path = $image->store('product_gallery', 'public');
-                $producto->images()->create(['image_path' => $path]);
+                $imageData = base64_encode(file_get_contents($image->getRealPath()));
+                $producto->images()->create([
+                    'image_path' => 'data:' . $image->getMimeType() . ';base64,' . $imageData
+                ]);
             }
         }
 

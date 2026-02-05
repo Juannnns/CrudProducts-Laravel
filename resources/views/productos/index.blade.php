@@ -46,7 +46,7 @@
                             <div class="flex items-start gap-3">
                                 <div class="relative">
                                     @if($producto->image_path)
-                                        <img src="{{ asset('storage/' . $producto->image_path) }}" alt="{{ $producto->nombre }}" class="w-20 h-20 object-cover rounded-lg flex-shrink-0">
+                                        <img src="{{ str_starts_with($producto->image_path, 'data:') ? $producto->image_path : asset('storage/' . $producto->image_path) }}" alt="{{ $producto->nombre }}" class="w-20 h-20 object-cover rounded-lg flex-shrink-0">
                                     @else
                                         <div class="w-20 h-20 bg-gray-200 dark:bg-gray-700 rounded-lg flex-shrink-0"></div>
                                     @endif
