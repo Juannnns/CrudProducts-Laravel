@@ -4,36 +4,230 @@ Esta es la documentación completa de la API REST para el sistema de gestión de
 
 ## URL Base
 ```
-http://127.0.0.1:8000/api
+http://localhost:8080/api
 ```
+
+---
+
+## 🚀 Inicio Rápido con Postman
+
+### 1️⃣ Login (Obtener Token)
+
+**Configuración en Postman:**
+- **Método**: `POST`
+- **URL**: `http://localhost:8080/api/login`
+- **Headers**:
+  - `Content-Type`: `application/json`
+  - `Accept`: `application/json`
+- **Body** (raw JSON):
+```json
+{
+  "email": "admin@example.com",
+  "password": "password"
+}
+```
+
+**Respuesta esperada:**
+```json
+{
+  "success": true,
+  "message": "Login exitoso",
+  "data": {
+    "user": {
+      "id": 1,
+      "name": "Admin User",
+      "email": "admin@example.com",
+      "role": "admin"
+    },
+    "token": "1|n33AhgjFLrU0BXBMBKMCRDvMsCo6DNwoswUTa3p3d50422ac"
+  }
+}
+```
+
+> **✅ IMPORTANTE**: Copia el `token` que recibes. Lo necesitarás para todas las demás peticiones.
+
+---
+
+### 2️⃣ Usar el Token en Otras Peticiones
+
+Para **cualquier** otra petición a la API, debes agregar el token:
+
+**En Postman:**
+1. Ve a la pestaña **Headers**
+2. Agrega:
+   - **Key**: `Authorization`
+   - **Value**: `Bearer {tu-token-aquí}`
+
+```
+Authorization: Bearer 1|n33AhgjFLrU0BXBMBKMCRDvMsCo6DNwoswUTa3p3d50422ac
+```
+
+---
+
+### 3️⃣ Logout (Desautenticarse)
+
+**Configuración en Postman:**
+- **Método**: `POST`
+- **URL**: `http://localhost:8080/api/logout`
+- **Headers**:
+  - `Authorization`: `Bearer {tu-token}`
+
+**Respuesta esperada:**
+```json
+{
+  "success": true,
+  "message": "Logout exitoso"
+}
+```
+
+> ⚠️ **Después del logout**, ese token queda **invalidado** y ya no funcionará. Deberás hacer login nuevamente para obtener un nuevo token.
+
+---
 
 ## Autenticación
 
-La API utiliza **Laravel Sanctum** para autenticación. Para las rutas protegidas, necesitas incluir un token de autenticación en el header:
+La API utiliza **Laravel Sanctum** para autenticación mediante tokens Bearer. **Todas las rutas de productos requieren autenticación**.
 
+### 🔐 Login (Obtener Token)
+**POST** `/api/login`
+
+Endpoint público para obtener un token de autenticación.
+
+**Campos del Body:**
+- `email` (string, requerido): Email del usuario
+- `password` (string, requerido): Contraseña
+
+**Ejemplo de Request:**
+```bash
+curl -X POST http://localhost:8080/api/login \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "admin@example.com",
+    "password": "password"
+  }'
+```
+
+**Ejemplo de Response:**
+```json
+{
+  "success": true,
+  "message": "Login exitoso",
+  "data": {
+    "user": {
+      "id": 1,
+      "name": "Admin User",
+      "email": "admin@example.com",
+      "role": "admin"
+    },
+    "token": "1|n33AhgjFLrU0BXBMBKMCRDvMsCo6DNwoswUTa3p3d50422ac"
+  }
+}
+```
+
+> **IMPORTANTE**: Guarda el `token` que recibes. Lo necesitarás para todas las demás peticiones.
+
+---
+
+### 🚪 Logout (Revocar Token)
+**POST** `/api/logout`
+
+Revoca el token actual del usuario autenticado.
+
+**Headers Requeridos:**
 ```
 Authorization: Bearer {token}
 ```
 
-### Obtener Token de Autenticación
+**Ejemplo de Request:**
+```bash
+curl -X POST http://localhost:8080/api/logout \
+  -H "Authorization: Bearer 1|n33AhgjFLrU0BXBMBKMCRDvMsCo6DNwoswUTa3p3d50422ac"
+```
 
-Primero, necesitas iniciar sesión desde la web o crear un endpoint de login. Laravel Jetstream ya proporciona las rutas de autenticación.
+**Ejemplo de Response:**
+```json
+{
+  "success": true,
+  "message": "Logout exitoso"
+}
+```
+
+---
+
+### 👤 Información del Usuario Autenticado
+**GET** `/api/me`
+
+Obtiene la información del usuario autenticado.
+
+**Headers Requeridos:**
+```
+Authorization: Bearer {token}
+```
+
+**Ejemplo de Request:**
+```bash
+curl -X GET http://localhost:8080/api/me \
+  -H "Authorization: Bearer 1|n33AhgjFLrU0BXBMBKMCRDvMsCo6DNwoswUTa3p3d50422ac"
+```
+
+**Ejemplo de Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "id": 1,
+    "name": "Admin User",
+    "email": "admin@example.com",
+    "role": "admin"
+  }
+}
+```
+
+---
+
+## Cómo Usar el Token
+
+Una vez que hayas obtenido el token mediante `/api/login`, debes incluirlo en **todas** las peticiones protegidas usando el header `Authorization`:
+
+```
+Authorization: Bearer {tu-token-aquí}
+```
+
+### Ejemplo con cURL:
+```bash
+curl -X GET http://localhost:8080/api/products \
+  -H "Authorization: Bearer 1|n33AhgjFLrU0BXBMBKMCRDvMsCo6DNwoswUTa3p3d50422ac" \
+  -H "Accept: application/json"
+```
+
+### Ejemplo con Postman/Thunder Client:
+1. Ve a la pestaña **Headers**
+2. Agrega:
+   - **Key**: `Authorization`
+   - **Value**: `Bearer {tu-token}`
+
+---
 
 ## Endpoints Disponibles
 
 ### 📋 Listar Productos
 **GET** `/api/products`
 
-Lista todos los productos (paginados, 10 por página).
+Lista todos los productos (paginados, 10 por página). **Requiere autenticación.**
 
 **Permisos:**
-- Públicos para lectura
-- Si estás autenticado como admin: verás todos los productos
-- Si estás autenticado como user: verás solo tus productos
+- Si estás autenticado como **admin**: verás todos los productos
+- Si estás autenticado como **user**: verás solo tus productos
+
+**Headers Requeridos:**
+```
+Authorization: Bearer {token}
+```
 
 **Ejemplo de Request:**
 ```bash
-curl -X GET http://127.0.0.1:8000/api/products \
+curl -X GET http://localhost:8080/api/products \
+  -H "Authorization: Bearer {tu-token}" \
   -H "Accept: application/json"
 ```
 
@@ -71,14 +265,20 @@ curl -X GET http://127.0.0.1:8000/api/products \
 ### 🔍 Ver Producto Específico
 **GET** `/api/products/{id}`
 
-Obtiene los detalles de un producto específico.
+Obtiene los detalles de un producto específico. **Requiere autenticación.**
 
 **Parámetros de URL:**
 - `id` (integer, requerido): ID del producto
 
+**Headers Requeridos:**
+```
+Authorization: Bearer {token}
+```
+
 **Ejemplo de Request:**
 ```bash
-curl -X GET http://127.0.0.1:8000/api/products/1 \
+curl -X GET http://localhost:8080/api/products/1 \
+  -H "Authorization: Bearer {tu-token}" \
   -H "Accept: application/json"
 ```
 
@@ -138,7 +338,7 @@ Accept: application/json
 
 **Ejemplo de Request:**
 ```bash
-curl -X POST http://127.0.0.1:8000/api/products \
+curl -X POST http://localhost:8080/api/products \
   -H "Authorization: Bearer {tu-token}" \
   -H "Accept: application/json" \
   -F "nombre=MacBook Pro" \
@@ -204,7 +404,7 @@ Accept: application/json
 
 **Ejemplo de Request:**
 ```bash
-curl -X PUT http://127.0.0.1:8000/api/products/10 \
+curl -X PUT http://localhost:8080/api/products/10 \
   -H "Authorization: Bearer {tu-token}" \
   -H "Accept: application/json" \
   -F "nombre=MacBook Pro M3" \
@@ -246,7 +446,7 @@ Accept: application/json
 
 **Ejemplo de Request:**
 ```bash
-curl -X DELETE http://127.0.0.1:8000/api/products/10 \
+curl -X DELETE http://localhost:8080/api/products/10 \
   -H "Authorization: Bearer {tu-token}" \
   -H "Accept: application/json"
 ```

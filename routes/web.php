@@ -28,6 +28,15 @@ Route::middleware([
 });
 
 Route::fallback(function () {
+    // Si es una petición a la API, devolver JSON 404
+    if (request()->is('api/*')) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Ruta no encontrada'
+        ], 404);
+    }
+
+    // Para peticiones web, redirigir como antes
     if (auth()->check()) {
         return redirect()->route('dashboard');
     }
