@@ -11,9 +11,12 @@
                 <div class="p-4 sm:p-6 lg:p-8 bg-white dark:bg-gray-800 dark:bg-gradient-to-bl dark:from-gray-700/50 dark:via-transparent border-b border-gray-200 dark:border-gray-700">
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10">
                         <!-- Imagen del producto -->
-                        <div>
+                        <div x-data="{ showModal: false, modalImage: '' }">
                              @if($producto->image_path)
-                                <img src="{{ str_starts_with($producto->image_path, 'data:') ? $producto->image_path : asset('storage/' . $producto->image_path) }}" alt="{{ $producto->nombre }}" class="w-full rounded-xl object-cover shadow-md mb-4 max-h-96 lg:max-h-none">
+                                <img src="{{ str_starts_with($producto->image_path, 'data:') ? $producto->image_path : asset('storage/' . $producto->image_path) }}" 
+                                     alt="{{ $producto->nombre }}" 
+                                     class="w-full rounded-xl object-cover shadow-md mb-4 max-h-96 lg:max-h-none cursor-pointer hover:opacity-90 transition"
+                                     @click="showModal = true; modalImage = $el.src">
                             @else
                                 <img src="https://via.placeholder.com/600?text=Sin+Imagen" alt="Producto Sin Imagen" class="w-full rounded-xl object-cover shadow-md mb-4 bg-gray-200 max-h-96 lg:max-h-none">
                             @endif
@@ -23,11 +26,36 @@
                                 <div class="grid grid-cols-3 sm:grid-cols-4 gap-2">
                                     @foreach($producto->images as $image)
                                         <div class="relative group">
-                                            <img src="{{ str_starts_with($image->image_path, 'data:') ? $image->image_path : asset('storage/' . $image->image_path) }}" class="h-20 sm:h-24 w-full object-cover rounded-md shadow-sm border border-gray-200 dark:border-gray-700 cursor-pointer hover:opacity-75 transition" onclick="window.open(this.src)">
+                                            <img src="{{ str_starts_with($image->image_path, 'data:') ? $image->image_path : asset('storage/' . $image->image_path) }}" 
+                                                 class="h-20 sm:h-24 w-full object-cover rounded-md shadow-sm border border-gray-200 dark:border-gray-700 cursor-pointer hover:opacity-75 transition" 
+                                                 @click="showModal = true; modalImage = $el.src">
                                         </div>
                                     @endforeach
                                 </div>
                             @endif
+
+                            <!-- Modal / Lightbox -->
+                            <div x-show="showModal" 
+                                 class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90 p-4"
+                                 x-transition:enter="transition ease-out duration-300"
+                                 x-transition:enter-start="opacity-0"
+                                 x-transition:enter-end="opacity-100"
+                                 x-transition:leave="transition ease-in duration-200"
+                                 x-transition:leave-start="opacity-100"
+                                 x-transition:leave-end="opacity-0"
+                                 style="display: none;"
+                                 @click.self="showModal = false"
+                                 @keydown.escape.window="showModal = false">
+                                
+                                <div class="relative max-w-5xl w-full max-h-screen flex justify-center">
+                                    <button @click="showModal = false" class="absolute -top-10 right-0 text-white hover:text-gray-300 focus:outline-none">
+                                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                        </svg>
+                                    </button>
+                                    <img :src="modalImage" class="max-w-full max-h-[90vh] rounded shadow-lg object-contain">
+                                </div>
+                            </div>
                         </div>
 
                         <!-- Información del producto -->

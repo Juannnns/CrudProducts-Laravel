@@ -44,7 +44,7 @@
                             <x-label for="image" value="{{ __('Imagen Principal') }}" />
                             @if($producto->image_path)
                                 <div class="mb-2">
-                                    <img src="{{ asset('storage/' . $producto->image_path) }}" alt="Imagen actual" class="h-32 sm:h-40 object-cover rounded">
+                                    <img src="{{ str_starts_with($producto->image_path, 'data:') ? $producto->image_path : asset('storage/' . $producto->image_path) }}" alt="Imagen actual" class="h-32 sm:h-40 object-cover rounded">
                                 </div>
                             @endif
                             <input id="image" type="file" name="image" class="block mt-1 w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
@@ -55,7 +55,7 @@
                             <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 mt-2">
                                 @foreach($producto->images as $img)
                                     <div class="relative">
-                                        <img src="{{ asset('storage/' . $img->image_path) }}" class="h-20 sm:h-24 w-full object-cover rounded">
+                                        <img src="{{ str_starts_with($img->image_path, 'data:') ? $img->image_path : asset('storage/' . $img->image_path) }}" class="h-20 sm:h-24 w-full object-cover rounded">
                                         <div class="flex items-center mt-1">
                                             <input type="checkbox" name="delete_images[]" value="{{ $img->id }}" class="mr-2 rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                             <span class="text-xs text-red-600">Eliminar</span>

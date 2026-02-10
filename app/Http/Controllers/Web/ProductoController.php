@@ -20,14 +20,14 @@ class ProductoController extends Controller
                 ->when($categoryFilter, function ($query) use ($categoryFilter) {
                     return $query->where('category_id', $categoryFilter);
                 })
-                ->paginate(10)
+                ->paginate(50)
                 ->appends(['category' => $categoryFilter]);
         } else {
             $productos = auth()->user()->products()->with(['category', 'images'])
                 ->when($categoryFilter, function ($query) use ($categoryFilter) {
                     return $query->where('category_id', $categoryFilter);
                 })
-                ->paginate(10)
+                ->paginate(50)
                 ->appends(['category' => $categoryFilter]);
         }
 
