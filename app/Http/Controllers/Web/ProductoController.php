@@ -15,21 +15,12 @@ class ProductoController extends Controller
         $categories = \App\Models\Category::all();
         $categoryFilter = request('category');
 
-        if (auth()->user()->isAdmin()) {
-            $productos = Product::with(['category', 'images'])
-                ->when($categoryFilter, function ($query) use ($categoryFilter) {
-                    return $query->where('category_id', $categoryFilter);
-                })
-                ->paginate(50)
-                ->appends(['category' => $categoryFilter]);
-        } else {
-            $productos = auth()->user()->products()->with(['category', 'images'])
-                ->when($categoryFilter, function ($query) use ($categoryFilter) {
-                    return $query->where('category_id', $categoryFilter);
-                })
-                ->paginate(50)
-                ->appends(['category' => $categoryFilter]);
-        }
+        $productos = Product::with(['category', 'images'])
+            ->when($categoryFilter, function ($query) use ($categoryFilter) {
+                return $query->where('category_id', $categoryFilter);
+            })
+            ->paginate(50)
+            ->appends(['category' => $categoryFilter]);
 
         return view('productos.index', compact('productos', 'categories', 'categoryFilter'));
     }
@@ -38,11 +29,9 @@ class ProductoController extends Controller
     {
         $producto = Product::with(['category', 'images'])->find($id);
         if (!$producto) {
-            return "Producto no encontrado";
+            abort(404, 'Producto no encontrado');
         }
-        if (!auth()->user()->isAdmin() && $producto->user_id != auth()->id()) {
-            abort(403, 'Unauthorized action.');
-        }
+        
         return view('productos.show', compact('producto'));
     }
 
@@ -150,7 +139,7 @@ class ProductoController extends Controller
             }
         }
 
-        return redirect('/productos');
+        return redirect()->route('productos.index');
     }
 
 
@@ -163,6 +152,6 @@ class ProductoController extends Controller
             }
             $producto->delete();
         }
-        return redirect('/productos');
+        return redirect()->route('productos.index');
     }
 }

@@ -11,39 +11,39 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-:root{--c1:#6366f1;--c2:#8b5cf6;--c3:#ec4899;--c4:#06b6d4;}
+:root{--c1:#d9a05b;--c2:#a67c52;--c3:#734f32;--c4:#8c6b4a;}
 html{scroll-behavior:smooth;}
-body{font-family:'Inter',sans-serif;background:#05050f;color:#fff;overflow-x:hidden;}
+body{font-family:'Inter',sans-serif;background:#0f0b08;color:#fff;overflow-x:hidden;}
 
 /* CANVAS */
 #bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;}
 
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:.9rem 2rem;display:flex;justify-content:space-between;align-items:center;transition:all .5s cubic-bezier(.4,0,.2,1);}
-nav.solid{background:rgba(5,5,15,.85);backdrop-filter:blur(24px);border-bottom:1px solid rgba(99,102,241,.2);box-shadow:0 8px 40px rgba(0,0,0,.4);}
-.logo{font-size:1.35rem;font-weight:900;background:linear-gradient(135deg,#818cf8,#c084fc,#f472b6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-.5px;}
+nav.solid{background:rgba(15,11,8,.85);backdrop-filter:blur(24px);border-bottom:1px solid rgba(217,160,91,.2);box-shadow:0 8px 40px rgba(0,0,0,.4);}
+.logo{font-size:1.35rem;font-weight:900;background:linear-gradient(135deg,#e6b877,#bf956b,#8c6444);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-.5px;}
 .nav-links{display:flex;gap:.75rem;align-items:center;}
 .nav-a{padding:.4rem 1rem;border-radius:8px;font-size:.875rem;font-weight:500;color:rgba(255,255,255,.65);text-decoration:none;transition:all .25s;}
 .nav-a:hover{color:#fff;background:rgba(255,255,255,.08);}
-.nav-btn{padding:.45rem 1.2rem;border-radius:9px;font-size:.875rem;font-weight:700;color:#fff;text-decoration:none;background:linear-gradient(135deg,var(--c1),var(--c2));box-shadow:0 0 20px rgba(99,102,241,.45);transition:all .3s;}
-.nav-btn:hover{transform:translateY(-2px);box-shadow:0 0 35px rgba(139,92,246,.7);}
+.nav-btn{padding:.45rem 1.2rem;border-radius:9px;font-size:.875rem;font-weight:700;color:#fff;text-decoration:none;background:linear-gradient(135deg,var(--c1),var(--c2));box-shadow:0 0 20px rgba(217,160,91,.45);transition:all .3s;}
+.nav-btn:hover{transform:translateY(-2px);box-shadow:0 0 35px rgba(166,124,82,.7);}
 
 /* HERO */
 .hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:5rem 2rem 3rem;z-index:1;overflow:hidden;}
-.hero-mesh{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 30%,rgba(99,102,241,.16) 0%,transparent 70%);transition:background 1s ease;}
-.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(99,102,241,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(99,102,241,.04) 1px,transparent 1px);background-size:70px 70px;mask-image:radial-gradient(ellipse 75% 75% at 50% 40%,black 0%,transparent 80%);}
+.hero-mesh{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 30%,rgba(217,160,91,.16) 0%,transparent 70%);transition:background 1s ease;}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(217,160,91,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(217,160,91,.04) 1px,transparent 1px);background-size:70px 70px;mask-image:radial-gradient(ellipse 75% 75% at 50% 40%,black 0%,transparent 80%);}
 .hero-content{position:relative;z-index:2;max-width:880px;}
-.hero-badge{display:inline-flex;align-items:center;gap:.5rem;padding:.35rem 1rem;border-radius:100px;font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;background:rgba(99,102,241,.12);border:1px solid rgba(99,102,241,.3);color:#a5b4fc;margin-bottom:1.75rem;opacity:0;}
-.pulse-dot{width:7px;height:7px;border-radius:50%;background:#4ade80;box-shadow:0 0 10px #4ade80;animation:pulseDot 2s ease-in-out infinite;}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;padding:.35rem 1rem;border-radius:100px;font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;background:rgba(217,160,91,.12);border:1px solid rgba(217,160,91,.3);color:#d9ba9c;margin-bottom:1.75rem;opacity:0;}
+.pulse-dot{width:7px;height:7px;border-radius:50%;background:#dbb27f;box-shadow:0 0 10px #dbb27f;animation:pulseDot 2s ease-in-out infinite;}
 .hero-title{font-size:clamp(2.6rem,7vw,5.5rem);font-weight:900;line-height:1.04;letter-spacing:-2px;margin-bottom:1.5rem;opacity:0;}
-.hero-title .grad{background:linear-gradient(135deg,#818cf8 0%,#c084fc 45%,#f472b6 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.typewriter{display:inline-block;border-right:3px solid #818cf8;padding-right:3px;white-space:nowrap;overflow:hidden;width:0;animation:typeReveal 2s steps(24,end) 1.4s forwards,blinkCursor .7s step-end 1.4s infinite;}
+.hero-title .grad{background:linear-gradient(135deg,#e6b877 0%,#bf956b 45%,#8c6444 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.typewriter{display:inline-block;border-right:3px solid #e6b877;padding-right:25px;box-sizing:content-box;white-space:nowrap;overflow:hidden;width:0;animation:typeReveal 2.2s steps(20,end) 1.4s forwards,blinkCursor .7s step-end 1.4s infinite;}
 .hero-sub{font-size:1.1rem;color:rgba(255,255,255,.5);line-height:1.75;max-width:580px;margin:0 auto 2.5rem;opacity:0;}
 .cta-row{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;opacity:0;}
-.btn-p{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 2rem;border-radius:12px;font-weight:700;font-size:.95rem;color:#fff;text-decoration:none;background:linear-gradient(135deg,var(--c1),var(--c2));box-shadow:0 0 30px rgba(99,102,241,.5),0 8px 30px rgba(99,102,241,.3);transition:all .35s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden;}
+.btn-p{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 2rem;border-radius:12px;font-weight:700;font-size:.95rem;color:#fff;text-decoration:none;background:linear-gradient(135deg,var(--c1),var(--c2));box-shadow:0 0 30px rgba(217,160,91,.5),0 8px 30px rgba(217,160,91,.3);transition:all .35s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden;}
 .btn-p::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--c2),var(--c3));opacity:0;transition:opacity .35s;}
 .btn-p:hover::after{opacity:1;}
-.btn-p:hover{transform:translateY(-4px) scale(1.03);box-shadow:0 0 55px rgba(139,92,246,.75),0 16px 40px rgba(99,102,241,.4);}
+.btn-p:hover{transform:translateY(-4px) scale(1.03);box-shadow:0 0 55px rgba(166,124,82,.75),0 16px 40px rgba(217,160,91,.4);}
 .btn-p span{position:relative;z-index:1;}
 .btn-s{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 2rem;border-radius:12px;font-weight:600;font-size:.95rem;color:rgba(255,255,255,.8);text-decoration:none;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);transition:all .35s cubic-bezier(.4,0,.2,1);backdrop-filter:blur(12px);}
 .btn-s:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.28);transform:translateY(-4px);color:#fff;}
@@ -60,23 +60,23 @@ nav.solid{background:rgba(5,5,15,.85);backdrop-filter:blur(24px);border-bottom:1
 
 /* SCROLL CUE */
 .scroll-cue{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.45rem;color:rgba(255,255,255,.25);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;opacity:0;}
-.scroll-line{width:1px;height:48px;background:linear-gradient(180deg,rgba(99,102,241,.8),transparent);animation:scrollLine 1.8s ease-in-out infinite;}
+.scroll-line{width:1px;height:48px;background:linear-gradient(180deg,rgba(217,160,91,.8),transparent);animation:scrollLine 1.8s ease-in-out infinite;}
 
 /* SECTION SHARED */
 .section{position:relative;z-index:1;padding:9rem 2rem;}
-.sec-label{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#818cf8;margin-bottom:.9rem;padding:.3rem 1rem;border-radius:100px;background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.22);}
+.sec-label{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#e6b877;margin-bottom:.9rem;padding:.3rem 1rem;border-radius:100px;background:rgba(217,160,91,.1);border:1px solid rgba(217,160,91,.22);}
 .sec-title{font-size:clamp(1.9rem,4vw,3.2rem);font-weight:900;letter-spacing:-1px;line-height:1.08;margin-bottom:.9rem;}
 .sec-sub{color:rgba(255,255,255,.4);font-size:1rem;max-width:480px;margin:0 auto;line-height:1.7;}
 .sec-head{text-align:center;margin-bottom:5rem;}
 
 /* STATS */
-.stats-wrap{background:linear-gradient(135deg,rgba(99,102,241,.07),rgba(139,92,246,.04));border-top:1px solid rgba(99,102,241,.14);border-bottom:1px solid rgba(99,102,241,.14);}
+.stats-wrap{background:linear-gradient(135deg,rgba(217,160,91,.07),rgba(166,124,82,.04));border-top:1px solid rgba(217,160,91,.14);border-bottom:1px solid rgba(217,160,91,.14);}
 .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:2rem;max-width:900px;margin:0 auto;text-align:center;}
-.stat-num{font-size:3.4rem;font-weight:900;letter-spacing:-2px;background:linear-gradient(135deg,#818cf8,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:block;line-height:1;}
+.stat-num{font-size:3.4rem;font-weight:900;letter-spacing:-2px;background:linear-gradient(135deg,#e6b877,#bf956b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:block;line-height:1;}
 .stat-lbl{color:rgba(255,255,255,.4);font-size:.85rem;margin-top:.45rem;}
 
 /* FEATURES */
-.feat-section{background:linear-gradient(180deg,#05050f 0%,#0c0c20 100%);}
+.feat-section{background:linear-gradient(180deg,#0f0b08 0%,#1c1510 100%);}
 .feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:1.4rem;max-width:1080px;margin:0 auto;}
 .feat-card{padding:2rem;border-radius:20px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.065);transition:border-color .3s,box-shadow .3s;position:relative;overflow:hidden;transform-style:preserve-3d;cursor:default;}
 .feat-card-inner{position:relative;z-index:1;}
@@ -89,22 +89,22 @@ nav.solid{background:rgba(5,5,15,.85);backdrop-filter:blur(24px);border-bottom:1
 .feat-tag{display:inline-block;margin-top:.9rem;padding:.22rem .75rem;border-radius:100px;font-size:.7rem;font-weight:700;letter-spacing:.05em;}
 
 /* 3D CUBE */
-.cube-section{display:flex;align-items:center;justify-content:center;gap:5rem;flex-wrap:wrap;background:#0c0c20;}
+.cube-section{display:flex;align-items:center;justify-content:center;gap:5rem;flex-wrap:wrap;background:#1c1510;}
 .scene{width:190px;height:190px;perspective:700px;flex-shrink:0;}
 .cube{width:100%;height:100%;position:relative;transform-style:preserve-3d;animation:spinCube 12s linear infinite;}
-.face{position:absolute;width:190px;height:190px;display:flex;align-items:center;justify-content:center;font-size:2.4rem;border-radius:14px;border:1.5px solid rgba(99,102,241,.35);}
-.face-f{background:rgba(99,102,241,.1);transform:translateZ(95px);}
-.face-b{background:rgba(139,92,246,.1);transform:rotateY(180deg) translateZ(95px);}
-.face-r{background:rgba(236,72,153,.1);transform:rotateY(90deg) translateZ(95px);}
-.face-l{background:rgba(6,182,212,.1);transform:rotateY(-90deg) translateZ(95px);}
-.face-t{background:rgba(16,185,129,.1);transform:rotateX(90deg) translateZ(95px);}
-.face-bo{background:rgba(245,158,11,.1);transform:rotateX(-90deg) translateZ(95px);}
+.face{position:absolute;width:190px;height:190px;display:flex;align-items:center;justify-content:center;font-size:2.4rem;border-radius:14px;border:1.5px solid rgba(217,160,91,.35);}
+.face-f{background:rgba(217,160,91,.1);transform:translateZ(95px);}
+.face-b{background:rgba(166,124,82,.1);transform:rotateY(180deg) translateZ(95px);}
+.face-r{background:rgba(115,79,50,.1);transform:rotateY(90deg) translateZ(95px);}
+.face-l{background:rgba(140,107,74,.1);transform:rotateY(-90deg) translateZ(95px);}
+.face-t{background:rgba(92,58,33,.1);transform:rotateX(90deg) translateZ(95px);}
+.face-bo{background:rgba(196,139,82,.1);transform:rotateX(-90deg) translateZ(95px);}
 .cube-txt{max-width:460px;}
 .cube-txt h2{font-size:clamp(1.9rem,4vw,3rem);font-weight:900;letter-spacing:-1px;margin-bottom:1rem;}
 .cube-txt p{color:rgba(255,255,255,.45);line-height:1.75;font-size:.97rem;}
 
 /* TECH */
-.tech-section{background:linear-gradient(180deg,#0c0c20 0%,#05050f 100%);}
+.tech-section{background:linear-gradient(180deg,#1c1510 0%,#0f0b08 100%);}
 .tech-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1.2rem;max-width:980px;margin:0 auto;}
 .tech-card{padding:2rem;border-radius:18px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.065);text-align:center;transition:all .4s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden;}
 .tech-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--ac),transparent);opacity:0;transition:opacity .4s;}
@@ -115,32 +115,76 @@ nav.solid{background:rgba(5,5,15,.85);backdrop-filter:blur(24px);border-bottom:1
 .tech-desc{font-size:.8rem;color:rgba(255,255,255,.38);}
 
 /* CTA */
-.cta-section{text-align:center;overflow:hidden;background:#05050f;}
+.cta-section{text-align:center;overflow:hidden;background:#0f0b08;}
 .cta-orb{position:absolute;border-radius:50%;filter:blur(90px);}
-.cta-o1{width:450px;height:450px;background:rgba(99,102,241,.14);top:-120px;left:-80px;}
-.cta-o2{width:350px;height:350px;background:rgba(236,72,153,.09);bottom:-100px;right:-60px;}
+.cta-o1{width:450px;height:450px;background:rgba(217,160,91,.14);top:-120px;left:-80px;}
+.cta-o2{width:350px;height:350px;background:rgba(115,79,50,.09);bottom:-100px;right:-60px;}
 .cta-inner{position:relative;z-index:1;max-width:640px;margin:0 auto;}
 .cta-title{font-size:clamp(2.2rem,5vw,3.8rem);font-weight:900;letter-spacing:-1.5px;margin-bottom:1.2rem;}
 .cta-sub{color:rgba(255,255,255,.44);font-size:1.05rem;margin-bottom:2.5rem;line-height:1.75;}
 
 /* FOOTER */
-footer{padding:2.5rem 2rem;text-align:center;border-top:1px solid rgba(255,255,255,.05);background:#05050f;color:rgba(255,255,255,.28);font-size:.85rem;position:relative;z-index:1;}
+footer{padding:2.5rem 2rem;text-align:center;border-top:1px solid rgba(255,255,255,.05);background:#0f0b08;color:rgba(255,255,255,.28);font-size:.85rem;position:relative;z-index:1;}
 
 /* ANIMATIONS */
-@keyframes pulseDot{0%,100%{box-shadow:0 0 10px #4ade80;opacity:1;}50%{box-shadow:0 0 4px #4ade80;opacity:.5;}}
+@keyframes pulseDot{0%,100%{box-shadow:0 0 10px #dbb27f;opacity:1;}50%{box-shadow:0 0 4px #dbb27f;opacity:.5;}}
 @keyframes typeReveal{from{width:0;}to{width:100%;}}
-@keyframes blinkCursor{0%,100%{border-color:#818cf8;}50%{border-color:transparent;}}
+@keyframes blinkCursor{0%,100%{border-color:#e6b877;}50%{border-color:transparent;}}
 @keyframes scrollLine{0%,100%{opacity:1;transform:scaleY(1);}50%{opacity:.25;transform:scaleY(.5);}}
 @keyframes spinCube{from{transform:rotateX(14deg) rotateY(0);}to{transform:rotateX(14deg) rotateY(360deg);}}
 @keyframes orbFloat{0%,100%{transform:translate(0,0) scale(1);}33%{transform:translate(30px,-40px) scale(1.08);}66%{transform:translate(-20px,20px) scale(.93);}}
 
 /* BG ORBS */
 .bg-orb{position:fixed;border-radius:50%;filter:blur(100px);pointer-events:none;z-index:0;will-change:transform;}
-.o1{width:600px;height:600px;background:rgba(99,102,241,.08);top:-80px;left:-120px;animation:orbFloat 12s ease-in-out infinite;}
-.o2{width:500px;height:500px;background:rgba(139,92,246,.06);bottom:-80px;right:-80px;animation:orbFloat 15s ease-in-out infinite reverse;}
-.o3{width:400px;height:400px;background:rgba(6,182,212,.05);top:40%;left:40%;animation:orbFloat 10s ease-in-out infinite 3s;}
+.o1{width:600px;height:600px;background:rgba(217,160,91,.08);top:-80px;left:-120px;animation:orbFloat 12s ease-in-out infinite;}
+.o2{width:500px;height:500px;background:rgba(166,124,82,.06);bottom:-80px;right:-80px;animation:orbFloat 15s ease-in-out infinite reverse;}
+.o3{width:400px;height:400px;background:rgba(140,107,74,.05);top:40%;left:40%;animation:orbFloat 10s ease-in-out infinite 3s;}
 
-@media(max-width:768px){.fcard{display:none;}.cube-section{flex-direction:column;text-align:center;}.cube-txt{text-align:center;}}
+/* RESPONSIVE MEDIA QUERIES */
+@media(max-width: 991px){
+    .fcard{display:none;}
+    .hero-title{font-size:clamp(2.4rem, 6vw, 4rem);}
+    .stats-grid{grid-template-columns:repeat(2, 1fr);}
+    .cube-section{flex-direction:column;text-align:center;gap:3rem;}
+    .cube-txt{text-align:center;}
+}
+
+@media(max-width: 768px){
+    nav { flex-direction: column; padding: 1rem; gap: 0.8rem; background: rgba(15,11,8,.95); border-bottom: 1px solid rgba(217,160,91,.2); }
+    nav.solid { padding: 1rem; }
+    .nav-links { flex-wrap: wrap; justify-content: center; width: 100%; gap: 0.5rem; }
+    .hero { padding: 8rem 1.5rem 3rem; }
+    .hero-title { font-size: 2.5rem; letter-spacing: -1px; }
+    .section { padding: 6rem 1.5rem !important; }
+    
+    .cta-row { display: flex; flex-direction: column; align-items: stretch; margin: 0 auto; max-width: 320px; width: 100%; }
+    .cta-row a { width: 100%; justify-content: center; }
+    
+    .feat-grid { grid-template-columns: minmax(240px, 1fr); gap: 1.2rem; }
+    .tech-grid { grid-template-columns: minmax(200px, 1fr) !important; gap: 1rem !important; }
+    
+    .cta-section > div[style*="grid-template-columns"] { grid-template-columns: 1fr !important; gap: 3rem !important; }
+    .cta-inner { text-align: center !important; }
+    .cta-feats li { justify-content: center; }
+    .cta-inner > div { flex-direction: column !important; justify-content: center !important; align-items: stretch !important; max-width: 320px; margin-left: auto; margin-right: auto; }
+    .cta-inner > div > a { justify-content: center !important; width: 100%; }
+    .cta-preview { display: none; }
+    .cta-title { font-size: 2.2rem !important; }
+    
+    .sec-head { margin-bottom: 3.5rem; }
+}
+
+@media(max-width: 480px){
+    .stats-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .hero-title { font-size: 2.1rem; }
+    .hero-sub { font-size: 0.95rem; line-height: 1.6; }
+    .stat-num { font-size: 2.8rem; }
+    .sec-title { font-size: 1.8rem; }
+    footer { padding: 2rem 1.5rem; }
+    .logo { font-size: 1.2rem; }
+    
+    .btn-p, .btn-s { padding: .75rem 1.5rem !important; font-size: .9rem !important; }
+}
     </style>
 </head>
 <body>
@@ -154,13 +198,14 @@ footer{padding:2.5rem 2rem;text-align:center;border-top:1px solid rgba(255,255,2
 <!-- NAV -->
 <nav id="nav">
     <div class="logo">{{ config('app.name', 'CrudProducts') }}</div>
-    @if(Route::has('login'))
     <div class="nav-links">
+        <a href="{{ route('productos.index') }}" class="nav-a">Menú</a>
+        @if(Route::has('login'))
         @auth
             <a href="{{ url('/dashboard') }}" class="nav-a">Dashboard</a>
             <form method="POST" action="{{ route('logout') }}" style="display:inline;">
                 @csrf
-                <button type="submit" class="nav-a" style="background:none;border:none;cursor:pointer;font-family:inherit;font-size:inherit;padding:.4rem 1rem;border-radius:8px;transition:all .25s;display:inline-flex;align-items:center;gap:.4rem;color:rgba(255,255,255,.65);" onmouseover="this.style.color='#f472b6';this.style.background='rgba(236,72,153,.1)'" onmouseout="this.style.color='rgba(255,255,255,.65)';this.style.background='none'">
+                <button type="submit" class="nav-a" style="background:none;border:none;cursor:pointer;font-family:inherit;font-size:inherit;padding:.4rem 1rem;border-radius:8px;transition:all .25s;display:inline-flex;align-items:center;gap:.4rem;color:rgba(255,255,255,.65);" onmouseover="this.style.color='#8c6444';this.style.background='rgba(115,79,50,.1)'" onmouseout="this.style.color='rgba(255,255,255,.65)';this.style.background='none'">
                     <svg style="width:14px;height:14px;flex-shrink:0;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
                     Cerrar Sesión
                 </button>
@@ -182,19 +227,19 @@ footer{padding:2.5rem 2rem;text-align:center;border-top:1px solid rgba(255,255,2
 
     <div class="float-cards" aria-hidden="true">
         <div class="fcard fc1">
-            <div class="fcard-icon" style="background:rgba(99,102,241,.2)">📦</div>
+            <div class="fcard-icon" style="background:rgba(217,160,91,.2)">📦</div>
             <div><div class="fcard-label">Nuevo producto</div>{{ $ultimoProducto ? Str::limit($ultimoProducto->nombre, 18) : 'Sin productos aún' }}</div>
         </div>
         <div class="fcard fc2">
-            <div class="fcard-icon" style="background:rgba(16,185,129,.2)">✅</div>
-            <div><div class="fcard-label">Venta completada</div><span style="color:#4ade80">+$1,240</span></div>
+            <div class="fcard-icon" style="background:rgba(92,58,33,.2)">✅</div>
+            <div><div class="fcard-label">Venta completada</div><span style="color:#dbb27f">+$1,240</span></div>
         </div>
         <div class="fcard fc3">
-            <div class="fcard-icon" style="background:rgba(236,72,153,.2)">📊</div>
+            <div class="fcard-icon" style="background:rgba(115,79,50,.2)">📊</div>
             <div><div class="fcard-label">Inventario activo</div>{{ $totalProductos }} {{ $totalProductos === 1 ? 'producto' : 'productos' }}</div>
         </div>
         <div class="fcard fc4">
-            <div class="fcard-icon" style="background:rgba(6,182,212,.2)">⚡</div>
+            <div class="fcard-icon" style="background:rgba(140,107,74,.2)">⚡</div>
             <div><div class="fcard-label">API Status</div>99.9% uptime</div>
         </div>
     </div>
@@ -216,7 +261,7 @@ footer{padding:2.5rem 2rem;text-align:center;border-top:1px solid rgba(255,255,2
             @auth
                 <a href="{{ url('/dashboard') }}" class="btn-p"><span>🚀</span><span>Ir al Dashboard</span></a>
             @else
-                <a href="{{ route('register') }}" class="btn-p"><span>✨</span><span>Comenzar Ahora</span></a>
+                <a href="{{ route('productos.index') }}" class="btn-p"><span>🍽️</span><span>Ver Menú</span></a>
                 <a href="{{ route('login') }}" class="btn-s">Iniciar Sesión →</a>
             @endauth
         </div>
@@ -254,58 +299,58 @@ footer{padding:2.5rem 2rem;text-align:center;border-top:1px solid rgba(255,255,2
         <p class="sec-sub">Gestión completa de productos con las herramientas más modernas del mercado</p>
     </div>
     <div class="feat-grid">
-        <div class="feat-card" data-color="#6366f1">
-            <div class="feat-glow" style="background:#6366f1"></div>
+        <div class="feat-card" data-color="#d9a05b">
+            <div class="feat-glow" style="background:#d9a05b"></div>
             <div class="feat-card-inner">
-                <div class="feat-ico" style="background:rgba(99,102,241,.15)">📦</div>
+                <div class="feat-ico" style="background:rgba(217,160,91,.15)">📦</div>
                 <div class="feat-name">Gestión Completa</div>
                 <div class="feat-desc">Crea, edita, elimina y administra todos tus productos desde una interfaz intuitiva y rápida.</div>
-                <span class="feat-tag" style="background:rgba(99,102,241,.12);color:#818cf8">CRUD</span>
+                <span class="feat-tag" style="background:rgba(217,160,91,.12);color:#e6b877">CRUD</span>
             </div>
         </div>
-        <div class="feat-card" data-color="#8b5cf6">
-            <div class="feat-glow" style="background:#8b5cf6"></div>
+        <div class="feat-card" data-color="#a67c52">
+            <div class="feat-glow" style="background:#a67c52"></div>
             <div class="feat-card-inner">
-                <div class="feat-ico" style="background:rgba(139,92,246,.15)">🏷️</div>
+                <div class="feat-ico" style="background:rgba(166,124,82,.15)">🏷️</div>
                 <div class="feat-name">Categorías</div>
                 <div class="feat-desc">Organiza tus productos por categorías para una mejor administración y búsqueda eficiente.</div>
-                <span class="feat-tag" style="background:rgba(139,92,246,.12);color:#c084fc">Filtros</span>
+                <span class="feat-tag" style="background:rgba(166,124,82,.12);color:#bf956b">Filtros</span>
             </div>
         </div>
-        <div class="feat-card" data-color="#10b981">
-            <div class="feat-glow" style="background:#10b981"></div>
+        <div class="feat-card" data-color="#5c3a21">
+            <div class="feat-glow" style="background:#5c3a21"></div>
             <div class="feat-card-inner">
-                <div class="feat-ico" style="background:rgba(16,185,129,.15)">🖼️</div>
+                <div class="feat-ico" style="background:rgba(92,58,33,.15)">🖼️</div>
                 <div class="feat-name">Imágenes Múltiples</div>
                 <div class="feat-desc">Sube múltiples imágenes para cada producto y crea galerías visuales atractivas.</div>
-                <span class="feat-tag" style="background:rgba(16,185,129,.12);color:#4ade80">Galería</span>
+                <span class="feat-tag" style="background:rgba(92,58,33,.12);color:#dbb27f">Galería</span>
             </div>
         </div>
-        <div class="feat-card" data-color="#f59e0b">
-            <div class="feat-glow" style="background:#f59e0b"></div>
+        <div class="feat-card" data-color="#c48b52">
+            <div class="feat-glow" style="background:#c48b52"></div>
             <div class="feat-card-inner">
-                <div class="feat-ico" style="background:rgba(245,158,11,.15)">🔐</div>
+                <div class="feat-ico" style="background:rgba(196,139,82,.15)">🔐</div>
                 <div class="feat-name">Seguridad</div>
                 <div class="feat-desc">Autenticación robusta y gestión de permisos con Laravel Jetstream y Sanctum.</div>
-                <span class="feat-tag" style="background:rgba(245,158,11,.12);color:#fcd34d">Auth</span>
+                <span class="feat-tag" style="background:rgba(196,139,82,.12);color:#e6b877">Auth</span>
             </div>
         </div>
-        <div class="feat-card" data-color="#ec4899">
-            <div class="feat-glow" style="background:#ec4899"></div>
+        <div class="feat-card" data-color="#734f32">
+            <div class="feat-glow" style="background:#734f32"></div>
             <div class="feat-card-inner">
-                <div class="feat-ico" style="background:rgba(236,72,153,.15)">⚡</div>
+                <div class="feat-ico" style="background:rgba(115,79,50,.15)">⚡</div>
                 <div class="feat-name">API REST</div>
                 <div class="feat-desc">API completa para integración con aplicaciones externas, móviles y de terceros.</div>
-                <span class="feat-tag" style="background:rgba(236,72,153,.12);color:#f472b6">REST</span>
+                <span class="feat-tag" style="background:rgba(115,79,50,.12);color:#8c6444">REST</span>
             </div>
         </div>
-        <div class="feat-card" data-color="#06b6d4">
-            <div class="feat-glow" style="background:#06b6d4"></div>
+        <div class="feat-card" data-color="#8c6b4a">
+            <div class="feat-glow" style="background:#8c6b4a"></div>
             <div class="feat-card-inner">
-                <div class="feat-ico" style="background:rgba(6,182,212,.15)">📱</div>
+                <div class="feat-ico" style="background:rgba(140,107,74,.15)">📱</div>
                 <div class="feat-name">Responsive</div>
                 <div class="feat-desc">Diseño completamente adaptable para desktop, tablet y dispositivos móviles.</div>
-                <span class="feat-tag" style="background:rgba(6,182,212,.12);color:#22d3ee">Mobile</span>
+                <span class="feat-tag" style="background:rgba(140,107,74,.12);color:#a6835d">Mobile</span>
             </div>
         </div>
     </div>
@@ -373,9 +418,9 @@ footer{padding:2.5rem 2rem;text-align:center;border-top:1px solid rgba(255,255,2
         </div>
 
         <!-- Jetstream -->
-        <div class="tech-card" style="--ac:#818cf8">
+        <div class="tech-card" style="--ac:#e6b877">
             <div class="tech-logo-wrap">
-                <svg viewBox="0 0 60 60" class="tech-svg" xmlns="http://www.w3.org/2000/svg"><polygon points="30,5 55,20 55,40 30,55 5,40 5,20" fill="none" stroke="#818cf8" stroke-width="2.5"/><circle cx="30" cy="30" r="9" fill="#818cf8" opacity=".8"/><line x1="30" y1="5" x2="30" y2="21" stroke="#818cf8" stroke-width="2"/><line x1="55" y1="20" x2="41" y2="25" stroke="#818cf8" stroke-width="2"/><line x1="55" y1="40" x2="41" y2="35" stroke="#818cf8" stroke-width="2"/><line x1="30" y1="55" x2="30" y2="39" stroke="#818cf8" stroke-width="2"/><line x1="5" y1="40" x2="19" y2="35" stroke="#818cf8" stroke-width="2"/><line x1="5" y1="20" x2="19" y2="25" stroke="#818cf8" stroke-width="2"/></svg>
+                <svg viewBox="0 0 60 60" class="tech-svg" xmlns="http://www.w3.org/2000/svg"><polygon points="30,5 55,20 55,40 30,55 5,40 5,20" fill="none" stroke="#e6b877" stroke-width="2.5"/><circle cx="30" cy="30" r="9" fill="#e6b877" opacity=".8"/><line x1="30" y1="5" x2="30" y2="21" stroke="#e6b877" stroke-width="2"/><line x1="55" y1="20" x2="41" y2="25" stroke="#e6b877" stroke-width="2"/><line x1="55" y1="40" x2="41" y2="35" stroke="#e6b877" stroke-width="2"/><line x1="30" y1="55" x2="30" y2="39" stroke="#e6b877" stroke-width="2"/><line x1="5" y1="40" x2="19" y2="35" stroke="#e6b877" stroke-width="2"/><line x1="5" y1="20" x2="19" y2="25" stroke="#e6b877" stroke-width="2"/></svg>
                 <span class="tech-version">v5</span>
             </div>
             <div class="tech-name">Jetstream</div>
@@ -425,7 +470,7 @@ footer{padding:2.5rem 2rem;text-align:center;border-top:1px solid rgba(255,255,2
         <!-- Left: text + buttons -->
         <div class="cta-inner" style="text-align:left;max-width:none;margin:0;">
             <div class="sec-label" style="display:inline-block;margin-bottom:1rem;">Empieza Hoy</div>
-            <h2 class="cta-title" style="font-size:clamp(2rem,4vw,3.2rem);">¿Listo para<br><span class="grad">comenzar?</span></h2>
+            <h2 class="cta-title" style="font-size:clamp(2rem,4vw,3.2rem);">¿Quieres realizar<br><span class="grad">una reserva?</span></h2>
             <p class="cta-sub" style="text-align:left;margin:1.2rem 0 2rem;">Únete y gestiona tus productos de forma profesional. Sin complicaciones, sin límites.</p>
 
             <ul class="cta-feats">
@@ -438,7 +483,7 @@ footer{padding:2.5rem 2rem;text-align:center;border-top:1px solid rgba(255,255,2
 
             <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:2rem;">
                 @guest
-                    <a href="{{ route('register') }}" class="btn-p" style="font-size:.95rem;padding:.9rem 2rem;"><span>✨</span><span>Crear Cuenta Gratis</span></a>
+                    <a href="{{ route('productos.index') }}" class="btn-p" style="font-size:.95rem;padding:.9rem 2rem;"><span>🍽️</span><span>Ver Menú Completo</span></a>
                     <a href="{{ route('login') }}" class="btn-s" style="font-size:.95rem;padding:.9rem 2rem;">Iniciar Sesión →</a>
                 @else
                     <a href="{{ url('/dashboard') }}" class="btn-p" style="font-size:.95rem;padding:.9rem 2rem;"><span>🚀</span><span>Ir al Dashboard</span></a>
@@ -447,49 +492,20 @@ footer{padding:2.5rem 2rem;text-align:center;border-top:1px solid rgba(255,255,2
             </div>
         </div>
 
-        <!-- Right: floating product preview card -->
-        <div class="cta-preview" aria-hidden="true">
-            <div class="preview-card">
-                <div class="preview-header">
-                    <div style="display:flex;align-items:center;gap:.6rem;">
-                        <div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:.9rem;">📦</div>
-                        <div>
-                            <div style="font-size:.8rem;font-weight:700;">Laptop Pro X1</div>
-                            <div style="font-size:.68rem;color:rgba(255,255,255,.4);">Electrónica · SKU-001</div>
-                        </div>
-                    </div>
-                    <span style="font-size:.75rem;font-weight:700;color:#4ade80;background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.25);padding:.2rem .6rem;border-radius:100px;">Activo</span>
+        <!-- Right: CTA Stats -->
+        <div class="cta-preview" aria-hidden="true" style="display:flex; flex-direction:column; justify-content:center;">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
+                <div class="mini-stat" style="padding:2rem 1.5rem; text-align:center;">
+                    <span style="font-size:2.4rem;font-weight:900;background:linear-gradient(135deg,#e6b877,#bf956b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:block;line-height:1;">{{ $totalProductos }}</span>
+                    <span style="font-size:.9rem;color:rgba(255,255,255,.45);margin-top:0.6rem;display:block;text-transform:uppercase;letter-spacing:.05em;font-weight:700;">Productos</span>
                 </div>
-                <div class="preview-body">
-                    <div class="prev-row"><span>Precio</span><strong>$1,299.00</strong></div>
-                    <div class="prev-row"><span>Stock</span><strong>48 unidades</strong></div>
-                    <div class="prev-row"><span>Categoría</span><strong>Electrónica</strong></div>
-                    <div class="prev-row"><span>Imágenes</span><strong>5 fotos</strong></div>
+                <div class="mini-stat" style="padding:2rem 1.5rem; text-align:center;">
+                    <span style="font-size:2.4rem;font-weight:900;background:linear-gradient(135deg,#dbb27f,#a6835d);-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:block;line-height:1;">{{ $totalCategorias }}</span>
+                    <span style="font-size:.9rem;color:rgba(255,255,255,.45);margin-top:0.6rem;display:block;text-transform:uppercase;letter-spacing:.05em;font-weight:700;">Categorías</span>
                 </div>
-                <div class="preview-footer">
-                    <div class="prev-btn" style="background:rgba(99,102,241,.15);border-color:rgba(99,102,241,.3);color:#818cf8;">✏️ Editar</div>
-                    <div class="prev-btn" style="background:rgba(16,185,129,.15);border-color:rgba(16,185,129,.3);color:#4ade80;">👁 Ver</div>
-                    <div class="prev-btn" style="background:rgba(236,72,153,.15);border-color:rgba(236,72,153,.3);color:#f472b6;">🗑 Eliminar</div>
-                </div>
-            </div>
-
-            <!-- Mini stats below card -->
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:.85rem;">
-                <div class="mini-stat">
-                    <span style="font-size:1.4rem;font-weight:900;background:linear-gradient(135deg,#818cf8,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">342</span>
-                    <span style="font-size:.72rem;color:rgba(255,255,255,.38);">Productos</span>
-                </div>
-                <div class="mini-stat">
-                    <span style="font-size:1.4rem;font-weight:900;background:linear-gradient(135deg,#4ade80,#22d3ee);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">$48K</span>
-                    <span style="font-size:.72rem;color:rgba(255,255,255,.38);">Valor inventario</span>
-                </div>
-                <div class="mini-stat">
-                    <span style="font-size:1.4rem;font-weight:900;background:linear-gradient(135deg,#f472b6,#fb923c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">12</span>
-                    <span style="font-size:.72rem;color:rgba(255,255,255,.38);">Categorías</span>
-                </div>
-                <div class="mini-stat">
-                    <span style="font-size:1.4rem;font-weight:900;background:linear-gradient(135deg,#fcd34d,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">99%</span>
-                    <span style="font-size:.72rem;color:rgba(255,255,255,.38);">Uptime</span>
+                <div class="mini-stat" style="padding:2rem 1.5rem; text-align:center; grid-column: 1 / -1;">
+                    <span style="font-size:2.4rem;font-weight:900;background:linear-gradient(135deg,#e6b877,#c48b52);-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:block;line-height:1;">99%</span>
+                    <span style="font-size:.9rem;color:rgba(255,255,255,.45);margin-top:0.6rem;display:block;text-transform:uppercase;letter-spacing:.05em;font-weight:700;">Uptime Garantizado</span>
                 </div>
             </div>
         </div>
@@ -499,7 +515,7 @@ footer{padding:2.5rem 2rem;text-align:center;border-top:1px solid rgba(255,255,2
 <style>
 .cta-feats{list-style:none;display:flex;flex-direction:column;gap:.6rem;}
 .cta-feats li{font-size:.9rem;color:rgba(255,255,255,.6);display:flex;align-items:center;gap:.6rem;}
-.cta-check{color:#4ade80;font-weight:900;font-size:.9rem;}
+.cta-check{color:#dbb27f;font-weight:900;font-size:.9rem;}
 .preview-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:20px;overflow:hidden;backdrop-filter:blur(20px);animation:ctaFloat 6s ease-in-out infinite;}
 @keyframes ctaFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
 .preview-header{display:flex;justify-content:space-between;align-items:center;padding:1.1rem 1.25rem;border-bottom:1px solid rgba(255,255,255,.06);}
@@ -512,12 +528,11 @@ footer{padding:2.5rem 2rem;text-align:center;border-top:1px solid rgba(255,255,2
 .prev-btn:hover{opacity:.7;}
 .mini-stat{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:.75rem 1rem;display:flex;flex-direction:column;gap:.2rem;}
 .cta-preview{position:relative;}
-@media(max-width:768px){.cta-section>div>div[style*="grid-template-columns"]{grid-template-columns:1fr!important;}.cta-inner{text-align:center!important;}.cta-feats li{justify-content:center;}.cta-inner>div{justify-content:center!important;}.cta-preview{display:none;}}
+
 </style>
 
 <footer>
     <p>© {{ date('Y') }} <strong style="color:rgba(255,255,255,.5)">{{ config('app.name', 'Laravel') }}</strong>. Todos los derechos reservados.</p>
-    <p style="margin-top:.35rem;font-size:.78rem;">Desarrollado con ❤️ usando Laravel</p>
 </footer>
 
 <script>
@@ -527,7 +542,7 @@ gsap.registerPlugin(ScrollTrigger);
 const canvas = document.getElementById('bg-canvas');
 const ctx = canvas.getContext('2d');
 let W, H, pts = [];
-const COLS = ['#6366f1','#8b5cf6','#ec4899','#06b6d4','#818cf8'];
+const COLS = ['#d9a05b','#a67c52','#734f32','#8c6b4a','#e6b877'];
 function resize(){ W = canvas.width = innerWidth; H = canvas.height = innerHeight; }
 resize(); addEventListener('resize', resize);
 for(let i=0;i<130;i++){
@@ -546,7 +561,7 @@ for(let i=0;i<130;i++){
         for(let j=i+1;j<pts.length;j++){
             const q=pts[j], dx=p.x-q.x, dy=p.y-q.y, d=Math.sqrt(dx*dx+dy*dy);
             if(d<110){ ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(q.x,q.y);
-                ctx.strokeStyle='#6366f1'; ctx.globalAlpha=(1-d/110)*.07; ctx.lineWidth=.5; ctx.stroke(); }
+                ctx.strokeStyle='#d9a05b'; ctx.globalAlpha=(1-d/110)*.07; ctx.lineWidth=.5; ctx.stroke(); }
         }
     }
     ctx.globalAlpha=1; requestAnimationFrame(drawPts);
@@ -560,7 +575,7 @@ addEventListener('scroll',()=>nav.classList.toggle('solid',scrollY>60));
 const heroBg = document.getElementById('heroBg');
 addEventListener('mousemove', e=>{
     const x=e.clientX/innerWidth*100, y=e.clientY/innerHeight*100;
-    heroBg.style.background=`radial-gradient(ellipse 75% 60% at ${x}% ${y}%,rgba(99,102,241,.2) 0%,transparent 65%),radial-gradient(ellipse 50% 40% at ${100-x}% ${100-y}%,rgba(139,92,246,.11) 0%,transparent 60%)`;
+    heroBg.style.background=`radial-gradient(ellipse 75% 60% at ${x}% ${y}%,rgba(217,160,91,.2) 0%,transparent 65%),radial-gradient(ellipse 50% 40% at ${100-x}% ${100-y}%,rgba(166,124,82,.11) 0%,transparent 60%)`;
 });
 
 // ─── GSAP HERO ENTRANCE ───────────────────────────────────

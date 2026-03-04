@@ -18,14 +18,15 @@ Route::middleware([
         $productos = \App\Models\Product::with('category')->orderBy('created_at', 'desc')->get();
         return view('dashboard', compact('productos'));
     })->name('dashboard');
-    Route::get('/productos', [ProductoController::class, 'index'])->name("productos.index");
-    Route::get('/productos/crear', [ProductoController::class, 'create'])->name("productos.create");
-    Route::get('/productos/{id}', [ProductoController::class, 'show'])->name("productos.show");
-    Route::post('/productos', [ProductoController::class, 'store'])->name("productos.store");
-    Route::get('/productos/{id}/editar', [ProductoController::class, 'edit'])->name("productos.edit");
-    Route::put('/productos/{id}', [ProductoController::class, 'update'])->name("productos.update");
-    Route::delete('/productos/{id}', [ProductoController::class, 'destroy'])->name("productos.destroy");
+    Route::get('/menu/crear', [ProductoController::class, 'create'])->name("productos.create");
+    Route::post('/menu', [ProductoController::class, 'store'])->name("productos.store");
+    Route::get('/menu/{id}/editar', [ProductoController::class, 'edit'])->name("productos.edit");
+    Route::put('/menu/{id}', [ProductoController::class, 'update'])->name("productos.update");
+    Route::delete('/menu/{id}', [ProductoController::class, 'destroy'])->name("productos.destroy");
 });
+
+Route::get('/menu', [ProductoController::class, 'index'])->name("productos.index");
+Route::get('/menu/{id}', [ProductoController::class, 'show'])->name("productos.show");
 
 Route::fallback(function () {
     // Si es una petición a la API, devolver JSON 404
