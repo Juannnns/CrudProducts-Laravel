@@ -1,14 +1,10 @@
 <x-app-layout>
-    <x-slot name="header">
-        <div class="flex items-center gap-4">
-            <a href="{{ route('productos.index') }}" class="text-[#d9a05b] hover:text-white transition-colors">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
-            </a>
-            <h2 class="font-bold text-2xl text-[#d9a05b] leading-tight tracking-tight">
-                {{ __('Detalle de Platillo') }}
-            </h2>
-        </div>
-    </x-slot>
+    <!-- Botón Flotante para Volver (Móvil/General) -->
+    <div class="fixed top-24 left-6 z-[40]">
+        <a href="{{ route('productos.index') }}" class="p-3 bg-black/50 backdrop-blur-md border border-white/10 text-[#d9a05b] rounded-full shadow-2xl hover:scale-110 active:scale-90 transition-all duration-300 group">
+            <svg class="w-6 h-6 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+        </a>
+    </div>
 
     @push('head')
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>

@@ -37,7 +37,7 @@ nav.solid{background:rgba(15,11,8,.85);backdrop-filter:blur(24px);border-bottom:
 .pulse-dot{width:7px;height:7px;border-radius:50%;background:#dbb27f;box-shadow:0 0 10px #dbb27f;animation:pulseDot 2s ease-in-out infinite;}
 .hero-title{font-size:clamp(2.6rem,7vw,5.5rem);font-weight:900;line-height:1.04;letter-spacing:-2px;margin-bottom:1.5rem;opacity:0;}
 .hero-title .grad{background:linear-gradient(135deg,#e6b877 0%,#bf956b 45%,#8c6444 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.typewriter{display:inline-block;border-right:3px solid #e6b877;padding-right:25px;box-sizing:content-box;white-space:nowrap;overflow:hidden;width:0;animation:typeReveal 2.2s steps(20,end) 1.4s forwards,blinkCursor .7s step-end 1.4s infinite;}
+.typewriter{display:inline-block;border-right:3px solid #e6b877;padding-right:25px;box-sizing:content-box;white-space:nowrap;overflow:hidden;width:0;animation:typeReveal 1s steps(20,end) 1.4s forwards,blinkCursor .7s step-end 2.4s infinite;}@keyframes typeReveal{from{width:0}to{width:100%}}
 .hero-sub{font-size:1.1rem;color:rgba(255,255,255,.5);line-height:1.75;max-width:580px;margin:0 auto 2.5rem;opacity:0;}
 .cta-row{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;opacity:0;}
 .btn-p{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 2rem;border-radius:12px;font-weight:700;font-size:.95rem;color:#fff;text-decoration:none;background:linear-gradient(135deg,var(--c1),var(--c2));box-shadow:0 0 30px rgba(217,160,91,.5),0 8px 30px rgba(217,160,91,.3);transition:all .35s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden;}
@@ -199,10 +199,8 @@ footer{padding:2.5rem 2rem;text-align:center;border-top:1px solid rgba(255,255,2
 <nav id="nav">
     <div class="logo">{{ config('app.name', 'CrudProducts') }}</div>
     <div class="nav-links">
-        <a href="{{ route('productos.index') }}" class="nav-a">Menú</a>
         @if(Route::has('login'))
         @auth
-            <a href="{{ url('/dashboard') }}" class="nav-a">Dashboard</a>
             <form method="POST" action="{{ route('logout') }}" style="display:inline;">
                 @csrf
                 <button type="submit" class="nav-a" style="background:none;border:none;cursor:pointer;font-family:inherit;font-size:inherit;padding:.4rem 1rem;border-radius:8px;transition:all .25s;display:inline-flex;align-items:center;gap:.4rem;color:rgba(255,255,255,.65);" onmouseover="this.style.color='#8c6444';this.style.background='rgba(115,79,50,.1)'" onmouseout="this.style.color='rgba(255,255,255,.65)';this.style.background='none'">
@@ -211,9 +209,8 @@ footer{padding:2.5rem 2rem;text-align:center;border-top:1px solid rgba(255,255,2
                 </button>
             </form>
         @else
-            <a href="{{ route('login') }}" class="nav-a">Iniciar Sesión</a>
             @if(Route::has('register'))
-                <a href="{{ route('register') }}" class="nav-btn">Registrarse</a>
+                <a href="{{ route('login') }}" class="nav-a">Iniciar Sesión</a>
             @endif
         @endauth
     </div>

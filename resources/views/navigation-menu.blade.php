@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
+<nav x-data="{ open: false }" class="bg-[#0f0b08] border-b border-[#d9a05b]/10 sticky top-0 z-[50] backdrop-blur-md bg-opacity-95">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -12,8 +12,8 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                        {{ auth()->check() ? __('Dashboard') : __('Inicio') }}
+                    <x-nav-link href="{{ url('/') }}" :active="request()->is('/')">
+                        {{ __('Inicio') }}
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
@@ -35,7 +35,7 @@
                                     </button>
                                 @else
                                     <span class="inline-flex rounded-md">
-                                        <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 active:bg-gray-50 dark:active:bg-gray-700 transition ease-in-out duration-150">
+                                        <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-xl text-gray-400 bg-white/5 hover:text-[#d9a05b] hover:bg-white/10 focus:outline-none transition ease-in-out duration-150">
                                             {{ Auth::user()->name }}
 
                                             <svg class="ms-2 -me-0.5 size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -77,16 +77,17 @@
                         </x-dropdown>
                     </div>
                 @else
-                    <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
-                    @if (Route::has('register'))
-                        <a href="{{ route('register') }}" class="ms-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
-                    @endif
+                    <div class="flex items-center">
+                        <a href="#reservar" class="px-6 py-2.5 text-sm font-black text-white bg-gradient-to-r from-[#d9a05b] to-[#a67c52] rounded-xl hover:scale-105 active:scale-95 transition-all shadow-xl shadow-[#d9a05b]/20 uppercase tracking-widest border border-white/10">
+                            Reservar
+                        </a>
+                    </div>
                 @endauth
             </div>
 
             <!-- Hamburger -->
             <div class="-me-2 flex items-center sm:hidden">
-                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out">
+                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-xl text-gray-400 hover:text-[#d9a05b] hover:bg-white/5 focus:outline-none transition duration-150 ease-in-out">
                     <svg class="size-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -98,14 +99,17 @@
 
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
+        <div class="pt-2 pb-3 space-y-1 bg-[#1c1510]/50 border-b border-[#d9a05b]/10">
+            <x-responsive-nav-link href="{{ url('/') }}" :active="request()->is('/')">
+                {{ __('Inicio') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('productos.index') }}" :active="request()->routeIs('productos.index')">
+                {{ __('Menú') }}
             </x-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->
-        <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
+        <div class="pt-4 pb-1 border-t border-[#d9a05b]/10 bg-[#1c1510]/30">
             @auth
                 <div class="flex items-center px-4">
                     @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
@@ -115,8 +119,8 @@
                     @endif
 
                     <div>
-                        <div class="font-medium text-base text-gray-800 dark:text-gray-200">{{ Auth::user()->name }}</div>
-                        <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+                        <div class="font-bold text-base text-white">{{ Auth::user()->name }}</div>
+                        <div class="font-medium text-sm text-[#d9a05b]/60">{{ Auth::user()->email }}</div>
                     </div>
                 </div>
 
@@ -176,15 +180,10 @@
                     @endif
                 </div>
             @else
-                <div class="space-y-1">
-                    <x-responsive-nav-link href="{{ route('login') }}">
-                        {{ __('Log In') }}
-                    </x-responsive-nav-link>
-                    @if (Route::has('register'))
-                        <x-responsive-nav-link href="{{ route('register') }}">
-                            {{ __('Register') }}
-                        </x-responsive-nav-link>
-                    @endif
+                <div class="bg-[#1c1510]/50 p-4 border-t border-[#d9a05b]/10">
+                    <a href="#reservar" class="block w-full text-center px-6 py-3 text-sm font-black text-white bg-gradient-to-r from-[#d9a05b] to-[#a67c52] rounded-xl shadow-xl shadow-[#d9a05b]/10 uppercase tracking-widest border border-white/10">
+                        Reservar
+                    </a>
                 </div>
             @endauth
         </div>
